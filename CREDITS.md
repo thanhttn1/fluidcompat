@@ -35,6 +35,12 @@ What FluidCompact does with it, stated plainly:
 * Immersive Petroleum (All rights reserved). FluidCompact reads nothing from it and adds no hook; the module only
   shows up in the compat list.
 
+## Mekanism Diesel Generators
+
+* Mekanism Diesel Generators by Noe (Apache-2.0; its port and construction textures derive from Mekanism, MIT).
+  FluidCompact contains no code or assets of it. It references the Create-powered Shaft Pump and Inline Pump class by name
+  at runtime and only makes the world pay for the water those pumps put into their tank.
+
 ## Reporting bugs
 
 **Report every FluidCompact bug to me (thanhttn1), not to the author of Flowing Fluids or of any other mod.**
@@ -52,6 +58,7 @@ Licenses below are as declared in the mods' own metadata (versions we tested aga
 | Modern Industrialization 2.5.x | Azerococo, Technici4n | MIT |
 | Mekanism 10.7.x | Aidancbrady and contributors | MIT |
 | Mekanism Elements 3.0.x | FixedDolphin927, NadienDev | MIT |
+| Mekanism Diesel Generators 1.5.x | Noe | Apache-2.0 |
 | Fluidlogged 2.0.x | Leximon | MIT |
 | Jade 15.x | Snownee | CC-BY-NC-SA-4.0 |
 | Just Enough Items 19.x | mezz | MIT |

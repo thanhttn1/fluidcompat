@@ -9,7 +9,7 @@ import java.util.Set;
 import it.unimi.dsi.fastutil.longs.LongArrayFIFOQueue;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
-import me.thanhtnt2.fluidcompact.balance.AutoBalance;
+import me.thanhtnt2.fluidcompact.core.balance.AutoBalance;
 import me.thanhtnt2.fluidcompact.config.FluidCompactCompatConfig;
 import me.thanhtnt2.fluidcompact.logging.FluidCompactLog;
 import net.minecraft.core.BlockPos;

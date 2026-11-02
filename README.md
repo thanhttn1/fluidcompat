@@ -12,27 +12,38 @@ NeoForge 1.21.1 - license: MIT (`LICENSE.txt`).
 
 ## What it does
 
-* **Modern Industrialization** Bronze, Steel and Electric Water Pumps stop creating water: every pumped
-  millibucket is drained from the water source blocks around the pump.
-* **Alex's Caves** Drain (opened by a Copper Valve or redstone) moves finite fluid level by level instead of failing under Flowing Fluids.
-* **Immersive Engineering** Fluid Pump no longer makes endless water out of pools with two source blocks: it takes
-  real source blocks out of the world (1000 mB each). Its Fluid Placer needs nothing. **Immersive Petroleum** needs
-  no hook: its pumpjacks draw from underground reservoirs, not from fluid blocks in the world.
-* **PneumaticCraft: Repressurized** Liquid Hopper and Gas Lift drain the world instead of duplicating water.
-* **Mekanism** Electric Pump and **Mekanism Elements** Seawater Pump drain the world too.
-* **Fluidlogged** support so fluid enters and flows through pipes and cables instead of breaking or blocking.
-* Pipes (MI, Modern Dynamics, XNet, Refined Storage, ...) never touch world fluid themselves, so they become
-  finite automatically once the pump is.
-* Fluid removal goes through the Flowing Fluids API. Lava, which Flowing Fluids does not flow by default,
-  falls back to a small built-in vanilla drain.
-* Jade tooltip and JEI info page for the pumps, a "Mod Compact List" config tab (needs YACL) and its own log
-  file `logs/fluidcompact.log`.
+FluidCompact exists for one purpose: **to keep water finite when other mods move it.** Flowing Fluids makes the
+world's water a limited resource, but pumps and drains from other mods still create water out of nothing or fail
+to understand Flowing Fluids' partial fluid levels. FluidCompact sits between the two and makes those machines take
+exactly what they receive out of the world, so ponds shrink, rivers can be drained, and nothing is duplicated.
+Fluid removal goes through the Flowing Fluids API.
+
+## Supported mods
+
+| Mod | What FluidCompact covers |
+| --- | --- |
+| **Modern Industrialization** | Bronze, Steel and Electric Water Pumps drain the world, including thin water layers |
+| **Mekanism** | Electric Pump removes the source blocks it pumps |
+| **Mekanism Elements** | Seawater Pump drains the water source below it |
+| **Mekanism Diesel Generators** (with Create) | Shaft Pump and Inline Pump drain the world instead of making water |
+| **PneumaticCraft: Repressurized** | Liquid Hopper (also thin leftover water) and Gas Lift stop duplicating water |
+| **Immersive Engineering** | Fluid Pump takes real source blocks, empties ponds fully, leaves no cobblestone |
+| **Alex's Caves** | Drain moves finite fluid level by level (Copper Valve needs nothing) |
+| **Create** | Handled by Flowing Fluids itself; FluidCompact only checks the combination |
+| **Immersive Petroleum** | Nothing needed: its pumpjacks draw from underground reservoirs |
+| **Fluidlogged** | Optional, off by default (it can duplicate water): lets fluid enter pipes |
+| **Jade, JEI, YACL** | Pump tooltip, pump info page, and the "Mod Compact List" config tab |
+
+Pipes and cables (Modern Industrialization, Modern Dynamics, XNet, Refined Storage, Mekanism transmitters) never
+take fluid from the world, so they become finite automatically once their pump is. Lava, which Flowing Fluids does
+not flow by default, falls back to a small built-in vanilla drain. FluidCompact writes its own log to
+`logs/fluidcompact.log`.
 
 ## Requirements
 
 * NeoForge 21.1.x, Minecraft 1.21.1
 * **Flowing Fluids 1.0.6 or newer (required)**
-* Optional: Modern Industrialization, Mekanism, Mekanism Elements, Alex's Caves, PneumaticCraft, Fluidlogged, Jade, JEI, YACL
+* Optional: any of the mods in the table above
 
 ## Addon API (`me.thanhtnt2.fluidcompact.api`)
 

@@ -62,10 +62,13 @@ public final class FiniteFluidServiceImpl implements FiniteFluidService {
     @Override
     public Optional<DrainBackend> activeBackendFor(ServerLevel level, Fluid fluid) {
         BackendPreference preference = FluidCompactConfig.BACKEND_PREFERENCE.get();
-        return DrainBackendRegistry.snapshot().stream()
-                .filter(backend -> preference.accepts(backend.id()))
-                .filter(backend -> backend.supports(level, fluid))
-                .findFirst();
+        // A plain loop: this runs for every intake, and a stream with two lambdas allocates on each call
+        for (DrainBackend backend : DrainBackendRegistry.snapshot()) {
+            if (preference.accepts(backend.id()) && backend.supports(level, fluid)) {
+                return Optional.of(backend);
+            }
+        }
+        return Optional.empty();
     }
 
     private int drainAcrossSources(DrainBackend backend, FluidIntakeRequest request, int levelsToDrain) {

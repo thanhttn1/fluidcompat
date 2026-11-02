@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import me.thanhtnt2.fluidcompact.api.FiniteFluidService;
-import me.thanhtnt2.fluidcompact.balance.AutoBalance;
+import me.thanhtnt2.fluidcompact.core.balance.AutoBalance;
 import me.thanhtnt2.fluidcompact.api.FluidCompactApi;
 import me.thanhtnt2.fluidcompact.api.FluidIntakeRequest;
 import me.thanhtnt2.fluidcompact.api.FluidIntakeResult;

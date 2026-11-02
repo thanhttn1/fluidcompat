@@ -13,6 +13,7 @@ import me.thanhtnt2.fluidcompact.compat.fluidlogged.FluidloggedCompatModule;
 import me.thanhtnt2.fluidcompact.compat.flowingfluids.FlowingFluidsPipesCompatModule;
 import me.thanhtnt2.fluidcompact.compat.info.InfoCompatModule;
 import me.thanhtnt2.fluidcompact.compat.mekanism.MekanismCompatModule;
+import me.thanhtnt2.fluidcompact.compat.mekanismdieselgenerators.MekanismDieselGeneratorsCompatModule;
 import me.thanhtnt2.fluidcompact.compat.modernindustrialization.ModernIndustrializationCompatModule;
 import me.thanhtnt2.fluidcompact.compat.pneumaticcraft.PneumaticCraftCompatModule;
 import me.thanhtnt2.fluidcompact.compat.mekanismelements.MekanismElementsCompatModule;
@@ -32,7 +33,7 @@ public final class CompatBootstrap {
 
     private static final List<String> MODS_TO_REPORT = List.of(
             "neoforge", "flowing_fluids", "modern_industrialization", "mekanism", "mekanismgenerators",
-            "mekanismelements", "mekmm", "alexscaves", "citadel", "immersiveengineering", "immersivepetroleum", "create", "pneumaticcraft", "pnc_ocean_addons", "pnc_electrostatic_fix", "fluidlogged", "jade", "jei", "yet_another_config_lib_v3");
+            "mekanismelements", "mekanismdieselgenerators", "mekmm", "alexscaves", "citadel", "immersiveengineering", "immersivepetroleum", "create", "pneumaticcraft", "pnc_ocean_addons", "pnc_electrostatic_fix", "fluidlogged", "jade", "jei", "yet_another_config_lib_v3");
 
     private CompatBootstrap() {
     }
@@ -52,6 +53,7 @@ public final class CompatBootstrap {
         CompatModuleRegistry.register(new ImmersiveEngineeringCompatModule());
         // Immersive Petroleum needs no hook: its pumpjacks draw from underground reservoirs, never from world fluid blocks
         CompatModuleRegistry.register(new InfoCompatModule("immersivepetroleum", "immersivepetroleum", "Immersive Petroleum (no hook needed)"));
+        CompatModuleRegistry.register(new MekanismDieselGeneratorsCompatModule());
         CompatModuleRegistry.register(new CreateCompatModule());
         CompatModuleRegistry.register(new FluidloggedCompatModule());
         CompatModuleRegistry.register(new FlowingFluidsPipesCompatModule());

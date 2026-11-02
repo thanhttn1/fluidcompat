@@ -2,15 +2,35 @@
 
 Versioning: `2.X.0` for a big update (new mod support), `2.0.X` for a small update or fix.
 
+## 2.2.0
+
+* **New: Mekanism Diesel Generators.** Its Create-powered **Shaft Pump** and **Inline Pump** filled their tank from any
+  water source block without taking anything out of the world, so with Flowing Fluids they made endless water. Now the
+  world pays for exactly the water the pump receives, every tick it pumps, using the same intake rules as every other
+  pump (`pumps.drainPercent` applies). When the water runs short the pump slows down instead of inventing water. The hook
+  only applies while Create is installed (the pumps do not exist without it) and is checked against the pump's code
+  when the game loads: if a Mekanism Diesel Generators update changes how the pump works, the hook stays off and the log
+  says why. New option `mekanism_diesel_generators.enabled` and a matching group in "Mod Compact List".
+  Mekanism Diesel Generators' other machines need no hook: the Oil Pumpjack uses underground deposits, and the cooling
+  tower, digester and pipes only handle fluid inside their own tanks.
+* Create 6.0.10 was checked for conflicts with the new hook: none of its mixins touch fluid tanks, block entities or
+  the pump class, and FluidCompact's Create exclusion only matches Create's own blocks.
+* **Auto Balanced Compact moved into the core** (`core.balance`): it is the shared optimisation system of the whole mod,
+  not a Flowing Fluids feature. Behaviour and config are unchanged.
+* **Lighter intake path.** Finding the drain backend no longer copies a list and builds a stream on every intake
+  (336 bytes per intake down to 16), which matters for pumps that work every tick. Same result, same API.
+* Housekeeping: removed five stray duplicate source files (copies without the `.java` extension) from the repository.
+* README: "What it does" is now the purpose of the mod, with a new **Supported mods** section.
+
 ## 2.1.1
 
-* **Immersive Engineering: the Fluid Pump now empties a pond completely.**
-  no more cobblestone from the Fluid Pump for finite fluids, including on blocks that had already
-  dried.** The pump builds its work list first and takes the blocks later. With Flowing Fluids a thin layer can flow away
-  in between; the pump still "takes" that empty block, spends energy and puts cobblestone there. 2.1.1 only looked at
-  the block just before taking it, so such blocks got through. The decision now also looks at the fluid the pump is
-  working on. The debug log says `block already empty, pump works on a finite fluid` when this case is caught.
-  `immersive_engineering.drainThinFluids`.
+* **Immersive Engineering: no more cobblestone from the Fluid Pump for finite fluids, including on blocks that had
+  already dried.** The pump builds its work list first and takes the blocks later. With Flowing Fluids a thin layer can
+  flow away in between; the pump still "takes" that empty block, spends energy and puts cobblestone there. The decision
+  now also looks at the fluid the pump is working on. The debug log says `block already empty, pump works on a finite
+  fluid` when this case is caught.
+* **Immersive Engineering: the Fluid Pump now empties a pond completely.** It also takes the thin layers Flowing Fluids
+  leaves behind (`immersive_engineering.drainThinFluids`).
 * **New guard for the pump.** The Immersive Engineering hooks are now checked as one contract (`PumpContract`, a separate
   class that only needs ASM): the pump's fields, the exact number and order of the calls the hooks rely on, and the two
   helper methods in `Utils`. If an Immersive Engineering update changes any of it, **all** Immersive Engineering hooks

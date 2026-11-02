@@ -16,6 +16,10 @@ public final class DrainBackendRegistry {
     // Copy-on-write because registration is rare while lookups happen every pump cycle
     private static final List<DrainBackend> BACKENDS = new CopyOnWriteArrayList<>();
 
+    // The ordered, immutable list handed to callers. It is rebuilt only when a backend is registered, so a lookup
+    // costs one volatile read instead of a fresh copy (some pumps ask on every tick)
+    private static volatile List<DrainBackend> orderedSnapshot = List.of();
+
     private DrainBackendRegistry() {
     }
 
@@ -27,10 +31,11 @@ public final class DrainBackendRegistry {
         }
         BACKENDS.add(backend);
         BACKENDS.sort(HIGHEST_PRIORITY_FIRST);
+        orderedSnapshot = List.copyOf(BACKENDS);
     }
 
     /** Immutable view ordered from highest to lowest priority. */
     public static List<DrainBackend> snapshot() {
-        return List.copyOf(BACKENDS);
+        return orderedSnapshot;
     }
 }

@@ -23,6 +23,9 @@ config="${mod_id}.compat.mekanism.mixins.json"
 config="${mod_id}.compat.mekanismelements.mixins.json"
 
 [[mixins]]
+config="${mod_id}.compat.mekanismdieselgenerators.mixins.json"
+
+[[mixins]]
 config="${mod_id}.compat.alexscaves.mixins.json"
 
 [[mixins]]
@@ -89,6 +92,13 @@ config="${mod_id}.compat.pneumaticcraft.hopper.mixins.json"
     modId="mekanismelements"
     type="optional"
     versionRange="[3,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="mekanismdieselgenerators"
+    type="optional"
+    versionRange="[1,)"
     ordering="AFTER"
     side="BOTH"
 

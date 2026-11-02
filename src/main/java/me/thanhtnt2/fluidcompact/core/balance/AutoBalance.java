@@ -1,4 +1,4 @@
-package me.thanhtnt2.fluidcompact.balance;
+package me.thanhtnt2.fluidcompact.core.balance;
 
 import me.thanhtnt2.fluidcompact.config.FluidCompactCompatConfig;
 import net.minecraft.server.MinecraftServer;

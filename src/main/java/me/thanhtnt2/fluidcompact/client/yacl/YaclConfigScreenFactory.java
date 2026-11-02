@@ -80,6 +80,7 @@ public final class YaclConfigScreenFactory {
                 .group(buildModernIndustrializationGroup())
                 .group(buildMekanismGroup())
                 .group(buildMekanismElementsGroup())
+                .group(buildMekanismDieselGeneratorsGroup())
                 .group(buildAlexsCavesGroup())
                 .group(buildImmersiveEngineeringGroup())
                 .group(buildPneumaticCraftGroup())
@@ -159,6 +160,15 @@ public final class YaclConfigScreenFactory {
                 .option(slider("seawaterDrainPercent", FluidCompactCompatConfig.SEAWATER_DRAIN_PERCENT, 1, 1000, 5, installed))
                 .option(slider("seawaterMinTicks", FluidCompactCompatConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES, 0, 6000, 20, installed))
                 .option(choice("seawaterShortfall", FluidCompactCompatConfig.SEAWATER_SHORTFALL, ShortfallBehavior.class, installed))
+                .build();
+    }
+
+    private static OptionGroup buildMekanismDieselGeneratorsGroup() {
+        boolean installed = isLoaded("mekanismdieselgenerators");
+        return OptionGroup.createBuilder()
+                .name(Component.translatable("fluidcompact.group.mekanism_diesel_generators"))
+                .description(OptionDescription.of(Component.translatable("fluidcompact.group.mekanism_diesel_generators.desc")))
+                .option(toggle("mdgPumpsEnabled", FluidCompactCompatConfig.MDG_PUMPS_ENABLED, installed))
                 .build();
     }
 

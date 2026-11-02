@@ -46,6 +46,8 @@ public final class FluidCompactCompatConfig {
     public static final ModConfigSpec.BooleanValue IE_PUMP_NO_COBBLE;
     public static final ModConfigSpec.BooleanValue IE_PUMP_DRAIN_THIN;
 
+    public static final ModConfigSpec.BooleanValue MDG_PUMPS_ENABLED;
+
     public static final ModConfigSpec.BooleanValue ALEXS_DRAIN_ENABLED;
     public static final ModConfigSpec.IntValue ALEXS_DRAIN_MAX_LEVELS_PER_CYCLE;
     public static final ModConfigSpec.IntValue ALEXS_DRAIN_INTERVAL_TICKS;
@@ -282,6 +284,14 @@ public final class FluidCompactCompatConfig {
                         "so a pond can be emptied completely. Each layer is taken as exactly the water it holds (125 mB per level)",
                         "and paid by the world. Whole source blocks are untouched. Only for fluids FluidCompact treats as finite.")
                 .define("drainThinFluids", true);
+        BUILDER.pop();
+
+        BUILDER.push("mekanism_diesel_generators");
+        MDG_PUMPS_ENABLED = BUILDER
+                .comment("Make the Create-powered Shaft Pump and Inline Pump of Mekanism Diesel Generators take water out of the world",
+                        "instead of making it. Each tick they pump, the world pays for exactly the water the pump receives (see",
+                        "pumps.drainPercent in fluidcompact-common.toml). Needs Create; without it these pumps do not exist.")
+                .define("enabled", true);
         BUILDER.pop();
 
         BUILDER.push("alexscaves_drain");

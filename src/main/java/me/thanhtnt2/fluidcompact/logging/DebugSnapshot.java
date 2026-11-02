@@ -36,7 +36,7 @@ public final class DebugSnapshot {
     }
 
     private static void logMixinState() {
-        for (String moduleId : new String[] {"modern_industrialization", "mekanism", "mekanism_elements", "pneumaticcraft", "pneumaticcraft_hopper"}) {
+        for (String moduleId : new String[] {"modern_industrialization", "mekanism", "mekanism_elements", "mekanism_diesel_generators", "alexscaves", "immersiveengineering", "pneumaticcraft", "pneumaticcraft_hopper"}) {
             FluidCompactLog.info("mixin applied [{}] = {}", moduleId, CompatMixinState.isApplied(moduleId));
         }
     }
@@ -61,6 +61,7 @@ public final class DebugSnapshot {
         FluidCompactLog.info("config[mekanism_elements_seawater_pump] enabled={} drainPercent={} minTicks={} shortfall={}",
                 FluidCompactCompatConfig.SEAWATER_PUMP_ENABLED.get(), FluidCompactCompatConfig.SEAWATER_DRAIN_PERCENT.get(),
                 FluidCompactCompatConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES.get(), FluidCompactCompatConfig.SEAWATER_SHORTFALL.get());
+        FluidCompactLog.info("config[mekanism_diesel_generators] enabled={}", FluidCompactCompatConfig.MDG_PUMPS_ENABLED.get());
         FluidCompactLog.info("config[auto_balanced] enabled={} followFlowingFluids={} targetMs={} maxSlowdown={}",
                 FluidCompactCompatConfig.AUTO_BALANCED_ENABLED.get(), FluidCompactCompatConfig.AUTO_BALANCED_FOLLOW_FLOWING_FLUIDS.get(),
                 FluidCompactCompatConfig.AUTO_BALANCED_TARGET_MSPT.get(), FluidCompactCompatConfig.AUTO_BALANCED_MAX_SLOWDOWN.get());

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.thanhtnt2.fluidcompact.compat.mekanismdieselgenerators.mixin.impl",
+  "plugin": "me.thanhtnt2.fluidcompact.compat.mekanismdieselgenerators.mixin.MekanismDieselGeneratorsMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AuxDriveBlockEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
