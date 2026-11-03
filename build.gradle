@@ -30,7 +30,7 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = 'fluidcompat'
 }
 
 // Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
@@ -104,7 +104,7 @@ dependencies {
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    // Optional integrations are compile-only: FluidCompact must boot without them.
+    // Optional integrations are compile-only: Fluid Compat must boot without them.
     // Put the jars of Flowing Fluids, Jade, JEI, Fluidlogged and YACL in the ./libs folder (they are NOT packed into your jar).
     compileOnly fileTree(dir: 'libs', include: ['flowing_fluids*.jar', 'Jade-*.jar', 'jei-*.jar', 'fluidlogged*.jar', 'yet_another_config_lib_v3*.jar'])
 }

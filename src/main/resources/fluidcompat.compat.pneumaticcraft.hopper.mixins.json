@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.thanhtnt2.fluidcompat.compat.pneumaticcraft.hopper.mixin.impl",
+  "plugin": "me.thanhtnt2.fluidcompat.compat.pneumaticcraft.hopper.mixin.PneumaticHopperMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "LiquidHopperBlockEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

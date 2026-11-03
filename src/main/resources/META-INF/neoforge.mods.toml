@@ -10,7 +10,7 @@ authors="thanhtnt2"
 description='''
 An unofficial intermediary compatibility mod that helps Flowing Fluids understand other mods better.
 '''
-credits='''Flowing Fluids by Traben (GNU LGPL 3.0), required and not bundled. See CREDITS.md for every mod FluidCompact works with.'''
+credits='''Flowing Fluids by Traben (GNU LGPL 3.0), required and not bundled. See CREDITS.md for every mod Fluid Compat works with.'''
 
 # Compat modules: one mixin config per mod so each hook is guarded and removable on its own
 [[mixins]]
@@ -37,6 +37,10 @@ config="${mod_id}.compat.pneumaticcraft.mixins.json"
 [[mixins]]
 config="${mod_id}.compat.pneumaticcraft.hopper.mixins.json"
 
+# Repairs for bugs inside Flowing Fluids itself; each patch guards its own target and can be disabled in the config
+[[mixins]]
+config="${mod_id}.compat.flowingfluidspatches.mixins.json"
+
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
@@ -59,7 +63,7 @@ config="${mod_id}.compat.pneumaticcraft.hopper.mixins.json"
     ordering="AFTER"
     side="BOTH"
 
-# Everything below is optional: FluidCompact must boot without any of it
+# Everything below is optional: Fluid Compat must boot without any of it
 [[dependencies.${mod_id}]]
     modId="modern_industrialization"
     type="optional"

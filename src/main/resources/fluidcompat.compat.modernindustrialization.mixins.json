@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.thanhtnt2.fluidcompat.compat.modernindustrialization.mixin.impl",
+  "plugin": "me.thanhtnt2.fluidcompat.compat.modernindustrialization.mixin.ModernIndustrializationMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AbstractWaterPumpBlockEntityMixin",
+    "AbstractWaterPumpThinWaterMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

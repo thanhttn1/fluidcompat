@@ -21,5 +21,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Note: this license covers FluidCompact only. Flowing Fluids (by Traben) is a separate mod under the
-GNU LGPL 3.0 and is NOT part of, nor bundled with, FluidCompact. See CREDITS.md.
+Note: this license covers Fluid Compat only. Flowing Fluids (by Traben) is a separate mod under the
+GNU LGPL 3.0 and is NOT part of, nor bundled with, Fluid Compat. See CREDITS.md.

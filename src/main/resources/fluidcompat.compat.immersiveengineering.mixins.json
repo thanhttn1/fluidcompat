@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.thanhtnt2.fluidcompat.compat.immersiveengineering.mixin.impl",
+  "plugin": "me.thanhtnt2.fluidcompat.compat.immersiveengineering.mixin.ImmersiveEngineeringMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FluidPumpBlockEntityMixin",
+    "FluidPumpCobbleMixin",
+    "FluidPumpAreaSearchMixin",
+    "UtilsDrainFluidBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

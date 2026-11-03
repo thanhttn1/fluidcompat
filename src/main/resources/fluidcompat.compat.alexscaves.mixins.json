@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.thanhtnt2.fluidcompat.compat.alexscaves.mixin.impl",
+  "plugin": "me.thanhtnt2.fluidcompat.compat.alexscaves.mixin.AlexsCavesMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DrainBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
