@@ -34,6 +34,13 @@ public final class FlowingFluidsShapes {
             "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;"
                     + "Lnet/minecraft/world/level/material/Fluid;)Z";
 
+    private static final String NEIGHBOR_CHANGED_DESC =
+            "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;"
+                    + "Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos;Z)V";
+    private static final String ON_PLACE_DESC =
+            "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;"
+                    + "Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)V";
+
     private static final String REMOVE_FLUID = "removeFluidAmountFromPos";
     private static final String REMOVE_FLUID_DESC =
             "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;"
@@ -130,6 +137,45 @@ public final class FlowingFluidsShapes {
             }
         }
         return placesAir && setsBlock;
+    }
+
+    /**
+     * True while {@code LiquidBlock.neighborChanged} and {@code LiquidBlock.onPlace} still have exactly the shape the
+     * fast interaction patch copies: one {@code FluidInteractionRegistry.canInteract} call, then (when it said no)
+     * one {@code getTickDelay} and one {@code scheduleTick}, and nothing else beyond reading the fluid state. If a
+     * game or NeoForge update adds any other work, skipping the method head would skip that work too, so the patch
+     * stays off.
+     */
+    public static boolean liquidBlockOnlyChecksThenSchedules(ClassNode liquidBlock) {
+        return methodOnlyChecksThenSchedules(find(liquidBlock, "neighborChanged", NEIGHBOR_CHANGED_DESC))
+                && methodOnlyChecksThenSchedules(find(liquidBlock, "onPlace", ON_PLACE_DESC));
+    }
+
+    private static boolean methodOnlyChecksThenSchedules(MethodNode method) {
+        if (method == null) {
+            return false;
+        }
+        int canInteractCalls = 0;
+        int tickDelayCalls = 0;
+        int scheduleTickCalls = 0;
+        for (AbstractInsnNode instruction : method.instructions.toArray()) {
+            if (instruction instanceof JumpInsnNode jump && jump.getOpcode() != Opcodes.IFNE) {
+                return false; // The only branch of the original is "if (canInteract) return"
+            }
+            if (!(instruction instanceof MethodInsnNode call)) {
+                continue;
+            }
+            switch (call.name) {
+                case "canInteract" -> canInteractCalls++;
+                case "getTickDelay" -> tickDelayCalls++;
+                case "scheduleTick" -> scheduleTickCalls++;
+                case "getFluidState", "getType" -> { }
+                default -> {
+                    return false; // Any other call is work the patch would skip
+                }
+            }
+        }
+        return canInteractCalls == 1 && tickDelayCalls == 1 && scheduleTickCalls == 1;
     }
 
     private static boolean isZeroComparison(AbstractInsnNode instruction) {

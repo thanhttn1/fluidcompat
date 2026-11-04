@@ -79,7 +79,8 @@ public final class DebugSnapshot {
         FluidCompatLog.info("config[flowing_fluids_pipes] enabled={} nonDisplacers={} waterlogFlowMode={} allowExperimental={}",
                 FluidCompatModulesConfig.FF_PIPES_ENABLED.get(), FluidCompatModulesConfig.FF_PIPES_NON_DISPLACERS.get(),
                 FluidCompatModulesConfig.FF_PIPES_WATERLOG_MODE.get(), FluidCompatModulesConfig.FF_PIPES_ALLOW_EXPERIMENTAL_MODES.get());
-        FluidCompatLog.info("config[flowing_fluid_patches] disablePatches={}", FluidCompatModulesConfig.FF_PATCHES_DISABLED.get());
+        FluidCompatLog.info("config[flowing_fluid_patches] disablePatches={} fastInteractionChecks={}",
+                FluidCompatModulesConfig.FF_PATCHES_DISABLED.get(), FluidCompatModulesConfig.FF_FAST_INTERACTION_CHECKS.get());
         FluidCompatLog.info("config[flowing_fluids_pipes] cleanOrphanPipeWater={} intervalTicks={} chunkRadius={}",
                 FluidCompatModulesConfig.FF_PIPES_CLEAN_ORPHAN_WATER.get(), FluidCompatModulesConfig.FF_PIPES_CLEANUP_INTERVAL_TICKS.get(),
                 FluidCompatModulesConfig.FF_PIPES_CLEANUP_CHUNK_RADIUS.get());

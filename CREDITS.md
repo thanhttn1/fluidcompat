@@ -19,10 +19,12 @@ What Fluid Compat does with it, stated plainly:
 * The goal is the opposite of copying: Fluid Compat teaches Flowing Fluids' world about other mods' water pumps
   (Modern Industrialization, Mekanism, ...) so those machines drain the world instead of creating fluid.
 * All the fluid physics people enjoy are Traben's work. Support the original mod.
-* Since 2.2.1 Fluid Compat also carries three small **mixin patches** for bugs inside Flowing Fluids (water wheel flow
-  updates, negative removal amounts and blocks without fluid being erased). They contain none of Flowing Fluids' code: each one only names the class and
-  method it repairs and runs its own replacement logic. They check the Flowing Fluids bytecode first, switch
-  themselves off when Flowing Fluids fixes the bug, and can be disabled in the config (`flowing_fluid_patches`).
+* Since 2.2.1 Fluid Compat also carries small **mixin patches**: three for bugs inside Flowing Fluids (water wheel flow
+  updates, negative removal amounts, blocks without fluid being erased) and, since 2.2.3, one performance patch on the
+  liquid block of the game (it skips NeoForge's fluid interaction check when only a fluid level changed). They contain
+  none of Flowing Fluids', NeoForge's or Minecraft's code: each one only names the class and method it changes and runs
+  its own replacement logic. They check the bytecode first, switch themselves off when it looks different, and can be
+  disabled in the config (`flowing_fluid_patches`).
 * report Fluid Compat issues to me (via Github or Discord), please do not flood the author page.
 
 ## Alex's Caves (Unofficial Port)

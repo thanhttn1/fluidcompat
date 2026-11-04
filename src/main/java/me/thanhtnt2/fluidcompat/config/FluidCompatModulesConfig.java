@@ -26,6 +26,7 @@ public final class FluidCompatModulesConfig {
     public static final ModConfigSpec.BooleanValue COMPAT_ENABLED;
 
     public static final ModConfigSpec.BooleanValue FF_PATCHES_DISABLED;
+    public static final ModConfigSpec.BooleanValue FF_FAST_INTERACTION_CHECKS;
 
     public static final ModConfigSpec.BooleanValue LOG_FILE_ENABLED;
     public static final ModConfigSpec.BooleanValue LOG_VERBOSE;
@@ -320,6 +321,12 @@ public final class FluidCompatModulesConfig {
                 .comment("Turn OFF Fluid Compat's small repairs for bugs inside Flowing Fluids (see the log file for the list).",
                         "These are mixins, so changing this needs a GAME RESTART. general.compatEnabled = false also turns them off.")
                 .define("disablePatches", false);
+        FF_FAST_INTERACTION_CHECKS = BUILDER
+                .comment("Skip NeoForge's fluid interaction check (lava meets water and similar) when a liquid block only changed its level.",
+                        "This is the biggest server tick saving of the patches with Flowing Fluids: the check ran on nearly every fluid update.",
+                        "Reactions between two different fluids or blocks are still checked in full. Needs a GAME RESTART.",
+                        "Turn it off if you ever see a fluid reaction that no longer happens.")
+                .define("fastInteractionChecks", true);
         BUILDER.pop();
 
         SPEC = BUILDER.build();

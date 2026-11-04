@@ -31,7 +31,7 @@ Fluid removal goes through the Flowing Fluids API.
 | **Alex's Caves** | Drain moves finite fluid level by level (Copper Valve needs nothing) |
 | **Create** | Handled by Flowing Fluids itself; Fluid Compat only checks the combination |
 | **Immersive Petroleum** | Nothing needed: its pumpjacks draw from underground reservoirs |
-| **Flowing Fluids** (bug-fix patches) | Water wheels get their flow updates; negative removal amounts no longer create fluid; blocks without fluid are not erased. Can be switched off |
+| **Flowing Fluids** (patches) | Water wheels get their flow updates; negative removal amounts no longer create fluid; blocks without fluid are not erased; fluid interaction checks are skipped for pure level changes (large server tick saving). Each can be switched off |
 | **Fluidlogged** | Optional, off by default (it can duplicate water): lets fluid enter pipes |
 | **Jade, JEI, YACL** | Pump tooltip, pump info page, and the "Mod Compat List" config tab |
 

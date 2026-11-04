@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,11 +39,32 @@ public final class PatchSwitch {
      * @return why the patches must stay off, or {@code null} when they may be applied
      */
     public static String reasonToStayOff() {
+        Map<String, Boolean> values = readBooleans();
+        if (Boolean.TRUE.equals(values.get(PATCHES_SECTION + ".disablePatches"))) {
+            return "flowing_fluid_patches.disablePatches is true";
+        }
+        if (Boolean.FALSE.equals(values.get(GENERAL_SECTION + ".compatEnabled"))) {
+            return "general.compatEnabled is false";
+        }
+        return null;
+    }
+
+    /**
+     * The fast interaction check patch has a switch of its own because it is the one patch that trades a little
+     * theoretical exactness for server speed. It is on unless the player turned it off.
+     */
+    public static boolean fastInteractionChecksSwitchedOff() {
+        return Boolean.FALSE.equals(readBooleans().get(PATCHES_SECTION + ".fastInteractionChecks"));
+    }
+
+    /** All {@code key = true/false} lines of the file as "section.key" to value; empty when the file cannot be read. */
+    private static Map<String, Boolean> readBooleans() {
+        Map<String, Boolean> values = new HashMap<>();
         List<String> lines;
         try {
             lines = Files.readAllLines(configFile(), StandardCharsets.UTF_8);
         } catch (IOException | RuntimeException | LinkageError unreadable) {
-            return null;
+            return values;
         }
         String section = "";
         for (String line : lines) {
@@ -51,18 +74,11 @@ public final class PatchSwitch {
                 continue;
             }
             Matcher entry = BOOLEAN_ENTRY.matcher(line);
-            if (!entry.matches()) {
-                continue;
-            }
-            boolean value = Boolean.parseBoolean(entry.group(2));
-            if (PATCHES_SECTION.equals(section) && "disablePatches".equals(entry.group(1)) && value) {
-                return "flowing_fluid_patches.disablePatches is true";
-            }
-            if (GENERAL_SECTION.equals(section) && "compatEnabled".equals(entry.group(1)) && !value) {
-                return "general.compatEnabled is false";
+            if (entry.matches()) {
+                values.put(section + "." + entry.group(1), Boolean.parseBoolean(entry.group(2)));
             }
         }
-        return null;
+        return values;
     }
 
     private static Path configFile() {

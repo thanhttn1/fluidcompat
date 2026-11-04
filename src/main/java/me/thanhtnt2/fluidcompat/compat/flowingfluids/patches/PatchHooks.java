@@ -3,7 +3,9 @@ package me.thanhtnt2.fluidcompat.compat.flowingfluids.patches;
 import me.thanhtnt2.fluidcompat.logging.FluidCompatLog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 
@@ -30,6 +32,27 @@ public final class PatchHooks {
             FluidCompatLog.errorThrottled("ff-patch-flow-listeners", "Flowing Fluids flow listener patch failed; the original code runs instead", error);
             return false;
         }
+    }
+
+    /**
+     * @return true when a neighbour update of this liquid block was only a level change in that neighbour, so the
+     *         (costly) fluid interaction check can be skipped; false on any doubt or error
+     */
+    public static boolean canSkipInteractionCheckForNeighbour(
+            BlockState state, Level level, Block neighbourBefore, BlockPos neighbourPos) {
+        try {
+            Block thisLiquid = state.getBlock();
+            // Cheapest test first: most updates come from a different block and need no world read at all
+            return thisLiquid == neighbourBefore
+                    && InteractionShortcut.neighbourOnlyChangedItsLevel(thisLiquid, neighbourBefore, level.getBlockState(neighbourPos).getBlock());
+        } catch (RuntimeException | LinkageError error) {
+            return false; // Fail open: the original check runs
+        }
+    }
+
+    /** @return true when this liquid block was only placed over its own earlier state (a level change) */
+    public static boolean canSkipInteractionCheckForPlacement(BlockState newState, BlockState oldState) {
+        return InteractionShortcut.placementOnlyChangedTheLevel(oldState.getBlock(), newState.getBlock());
     }
 
     /**

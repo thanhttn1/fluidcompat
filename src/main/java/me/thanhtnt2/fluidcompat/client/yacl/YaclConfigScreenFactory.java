@@ -273,10 +273,20 @@ public final class YaclConfigScreenFactory {
                 .flag(OptionFlag.GAME_RESTART)
                 .available(installed)
                 .build();
+        Option<Boolean> fastChecks = Option.<Boolean>createBuilder()
+                .name(Component.translatable(KEY_PREFIX + "ffFastInteractionChecks"))
+                .description(OptionDescription.of(Component.translatable(KEY_PREFIX + "ffFastInteractionChecks.desc")))
+                .binding(FluidCompatModulesConfig.FF_FAST_INTERACTION_CHECKS.getDefault(),
+                        FluidCompatModulesConfig.FF_FAST_INTERACTION_CHECKS::get, FluidCompatModulesConfig.FF_FAST_INTERACTION_CHECKS::set)
+                .controller(TickBoxControllerBuilder::create)
+                .flag(OptionFlag.GAME_RESTART)
+                .available(installed)
+                .build();
         return OptionGroup.createBuilder()
                 .name(Component.translatable("fluidcompat.group.flowing_fluid_patches"))
                 .description(OptionDescription.of(Component.translatable("fluidcompat.group.flowing_fluid_patches.desc")))
                 .option(disablePatches)
+                .option(fastChecks)
                 .build();
     }
 

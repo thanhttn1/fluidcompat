@@ -141,6 +141,8 @@
   "fluidcompat.group.flowing_fluid_patches.desc": "Small repairs for bugs inside Flowing Fluids itself, applied while the game starts. Each one switches itself off if Flowing Fluids fixes that code.",
   "fluidcompat.option.ffPatchesDisabled": "Disable Patches",
   "fluidcompat.option.ffPatchesDisabled.desc": "Turns the Flowing Fluids bug-fix patches off. Needs a game restart to take effect.",
+  "fluidcompat.option.ffFastInteractionChecks": "Fast Fluid Interaction Checks",
+  "fluidcompat.option.ffFastInteractionChecks.desc": "Skips NeoForge's fluid interaction check (lava meets water and similar) when a liquid block only changed its level. Saves a lot of server time with Flowing Fluids. Reactions between different fluids are still checked in full. Needs a game restart.",
   "fluidcompat.option.fluidloggedRisk": "Accept Duplication Risk (DANGEROUS)",
   "fluidcompat.option.fluidloggedRisk.desc": "Fluidlogged keeps a hidden copy of the fluid inside pipes. With Flowing Fluids this was seen to duplicate water, so the addon is only registered when this is on. Keep it off. Needs a restart.",
   "fluidcompat.group.pneumaticcraft": "PneumaticCraft: Repressurized",

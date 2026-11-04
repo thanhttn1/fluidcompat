@@ -38,6 +38,11 @@ public final class FlowingFluidsPatchesCompatModule implements CompatModule {
         report("water wheel flow listeners", me.thanhtnt2.fluidcompat.compat.flowingfluids.patches.mixin.FlowingFluidsPatchesMixinPlugin.LISTENER_PATCH_ID);
         report("negative removal amount", me.thanhtnt2.fluidcompat.compat.flowingfluids.patches.mixin.FlowingFluidsPatchesMixinPlugin.REMOVAL_PATCH_ID);
         report("keep blocks that hold no fluid", me.thanhtnt2.fluidcompat.compat.flowingfluids.patches.mixin.FlowingFluidsPatchesMixinPlugin.ERASE_PATCH_ID);
+        if (FluidCompatModulesConfig.FF_FAST_INTERACTION_CHECKS.get()) {
+            report("fast fluid interaction checks", me.thanhtnt2.fluidcompat.compat.flowingfluids.patches.mixin.FlowingFluidsPatchesMixinPlugin.FAST_CHECKS_PATCH_ID);
+        } else {
+            FluidCompatLog.info("[flowing_fluid_patches] fast fluid interaction checks are switched off in the config");
+        }
     }
 
     private static void report(String name, String patchId) {

@@ -2,6 +2,22 @@
 
 Versioning: `2.X.0` for a big update (new mod support), `2.X.Y` for a small update or fix.
 
+## 2.2.3
+
+* **New: faster fluid interaction checks (big server tick saving with Flowing Fluids).** NeoForge checks whether a fluid
+  reacts with something next to it (lava meets water and similar) on nearly every neighbour update and every placement
+  of a liquid block, and Flowing Fluids changes fluid levels all the time. In a server profile of a 300+ mod pack this
+  check took more than half of the whole server thread. Now the check is skipped when a liquid block only changed its
+  level inside the same fluid. The fluid tick that keeps water flowing is still scheduled, and every change between two
+  different fluids or blocks (water next to lava, a block replaced by a liquid) is still checked in full.
+  * Switch: `flowing_fluid_patches.fastInteractionChecks` (default true, game restart needed, also in the
+    "Mod Compat List" tab). `disablePatches` and `general.compatEnabled = false` turn it off too.
+  * It checks the game code when it loads and switches itself off if that code looks different.
+  * Known limit: a modded reaction that depends on the fluid's own level (not only on what is next to it) may react a
+    little later. If you ever see a fluid reaction that no longer happens, turn the option off and tell us which mod.
+* Flowing Fluids patches are now four: water wheel flow updates, negative removal amounts, keeping blocks that hold no
+  fluid, and the fast interaction checks.
+
 ## 2.2.2
 
 * **The mod id, config files, log files and tag ids now use the name Fluid Compat.** Your old settings are copied

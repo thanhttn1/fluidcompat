@@ -28,13 +28,21 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
     public static final String LISTENER_PATCH_ID = MODULE_ID + ".flow_listeners";
     public static final String REMOVAL_PATCH_ID = MODULE_ID + ".negative_removal";
     public static final String ERASE_PATCH_ID = MODULE_ID + ".erase_only_fluid_blocks";
+    public static final String FAST_CHECKS_PATCH_ID = MODULE_ID + ".fast_interaction_checks";
+
+    private static final String FLUID_UTILS_CLASS = "traben.flowing_fluids.FFFluidUtils";
 
     // Read once: the answer cannot change while the game runs, and it is asked once per mixin class
     private String reasonToStayOff;
+    private boolean fastChecksSwitchedOff;
 
     @Override
     public void onLoad(String mixinPackage) {
         reasonToStayOff = PatchSwitch.reasonToStayOff();
+        fastChecksSwitchedOff = PatchSwitch.fastInteractionChecksSwitchedOff();
+        if (fastChecksSwitchedOff) {
+            LOGGER.info("[{}] fast interaction checks are off: flowing_fluid_patches.fastInteractionChecks is false", MODULE_ID);
+        }
         if (reasonToStayOff != null) {
             LOGGER.info("[{}] patches are off: {}", MODULE_ID, reasonToStayOff);
         }
@@ -47,7 +55,8 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
         if (patchId == null) {
             return false; // Not one of ours: never apply something this plugin does not know
         }
-        boolean apply = reasonToStayOff == null && targetStillHasTheBug(targetClass, patchId);
+        boolean allowed = reasonToStayOff == null && !(FAST_CHECKS_PATCH_ID.equals(patchId) && fastChecksSwitchedOff);
+        boolean apply = allowed && targetStillHasTheBug(targetClass, patchId);
         CompatMixinState.record(patchId, apply);
         return apply;
     }
@@ -61,6 +70,9 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
         }
         if (mixinClassName.endsWith(".FluidUtilsEraseOnlyFluidBlocksMixin")) {
             return ERASE_PATCH_ID;
+        }
+        if (mixinClassName.endsWith(".LiquidBlockInteractionShortcutMixin")) {
+            return FAST_CHECKS_PATCH_ID;
         }
         return null;
     }
@@ -80,13 +92,24 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
             stillBroken = FlowingFluidsShapes.flowListenerLookupIsBroken(target);
         } else if (REMOVAL_PATCH_ID.equals(patchId)) {
             stillBroken = FlowingFluidsShapes.removalAcceptsNegativeAmounts(target);
+        } else if (FAST_CHECKS_PATCH_ID.equals(patchId)) {
+            // A vanilla class, so it is only worth touching when Flowing Fluids is there to cause the update storm
+            stillBroken = flowingFluidsIsPresent() && FlowingFluidsShapes.liquidBlockOnlyChecksThenSchedules(target);
         } else {
             stillBroken = FlowingFluidsShapes.removeAllFluidErasesAnyBlock(target);
         }
         if (!stillBroken) {
-            LOGGER.info("[{}] {} does not have the expected flaw (fixed or changed), patch skipped", patchId, targetClass);
+            LOGGER.info("[{}] {} does not have the expected shape (fixed or changed), patch skipped", patchId, targetClass);
         }
         return stillBroken;
+    }
+
+    private static boolean flowingFluidsIsPresent() {
+        try {
+            return MixinService.getService().getBytecodeProvider().getClassNode(FLUID_UTILS_CLASS) != null;
+        } catch (Exception absent) {
+            return false;
+        }
     }
 
     @Override
