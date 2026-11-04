@@ -14,7 +14,7 @@ A clear and concise description of what the bug is.
 Steps to reproduce the behavior:
 1. Go to '\[your-modpack]'
 2. Click on 'logs folder'
-3. Scroll down to 'fluidcompact.log', and 'fluidcompact-previous.log' (Optional)
+3. Scroll down to 'fluidcompat.log', and 'fluidcompat-previous.log' (Optional)
 4. See error
 
 **Expected behavior**

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "mekanism:electric_pump",
+      "required": false
+    },
+    {
+      "id": "mekanismelements:seawater_pump",
+      "required": false
+    },
+    {
+      "id": "pneumaticcraft:liquid_hopper",
+      "required": false
+    },
+    {
+      "id": "pneumaticcraft:gas_lift",
+      "required": false
+    }
+  ]
+}

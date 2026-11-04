@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "modern_industrialization:bronze_water_pump", "required": false },
+    { "id": "modern_industrialization:steel_water_pump", "required": false },
+    { "id": "modern_industrialization:electric_water_pump", "required": false }
+  ]
+}

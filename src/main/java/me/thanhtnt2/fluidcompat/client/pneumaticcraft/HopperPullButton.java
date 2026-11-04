@@ -53,7 +53,7 @@ final class HopperPullButton extends Button {
             return;
         }
         shownState = enabled;
-        String key = enabled ? "fluidcompact.pnc.hopper_pull.on" : "fluidcompact.pnc.hopper_pull.off";
+        String key = enabled ? "fluidcompat.pnc.hopper_pull.on" : "fluidcompat.pnc.hopper_pull.off";
         setTooltip(Tooltip.create(Component.translatable(key)));
     }
 }

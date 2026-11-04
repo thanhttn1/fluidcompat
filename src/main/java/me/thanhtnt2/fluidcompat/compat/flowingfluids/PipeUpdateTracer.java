@@ -12,7 +12,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 /**
  * Debug mode only: logs every block update of a pipe together with its fluid, so a pipe that flickers
- * between submerged and dry shows up as a clear sequence in logs/fluidcompact.log.
+ * between submerged and dry shows up as a clear sequence in logs/fluidcompat.log.
  */
 final class PipeUpdateTracer {
 

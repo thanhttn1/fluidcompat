@@ -6,7 +6,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "FluidUtilsFlowListenerMixin",
-    "FlowingFluidsApiNegativeRemovalMixin"
+    "FlowingFluidsApiNegativeRemovalMixin",
+    "FluidUtilsEraseOnlyFluidBlocksMixin"
   ],
   "injectors": {
     "defaultRequire": 0

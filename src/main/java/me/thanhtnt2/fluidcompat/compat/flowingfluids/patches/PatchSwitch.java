@@ -22,7 +22,9 @@ import net.neoforged.fml.loading.FMLPaths;
  */
 public final class PatchSwitch {
 
-    private static final String CONFIG_FILE_NAME = "fluidcompact-compat.toml";
+    private static final String CONFIG_FILE_NAME = "fluidcompat-compat.toml";
+    // Mixins are chosen before the settings are copied from the old file name, so a first start after an update looks here too
+    private static final String LEGACY_CONFIG_FILE_NAME = "fluidcompact-compat.toml";
     private static final String GENERAL_SECTION = "general";
     private static final String PATCHES_SECTION = "flowing_fluid_patches";
     private static final Pattern SECTION_HEADER = Pattern.compile("^\\s*\\[([^\\]]+)]\\s*(#.*)?$");
@@ -64,6 +66,8 @@ public final class PatchSwitch {
     }
 
     private static Path configFile() {
-        return FMLPaths.CONFIGDIR.get().resolve(CONFIG_FILE_NAME);
+        Path configFolder = FMLPaths.CONFIGDIR.get();
+        Path current = configFolder.resolve(CONFIG_FILE_NAME);
+        return Files.exists(current) ? current : configFolder.resolve(LEGACY_CONFIG_FILE_NAME);
     }
 }

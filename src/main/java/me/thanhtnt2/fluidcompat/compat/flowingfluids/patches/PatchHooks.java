@@ -4,6 +4,7 @@ import me.thanhtnt2.fluidcompat.logging.FluidCompatLog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 
 /**
@@ -28,6 +29,27 @@ public final class PatchHooks {
             // LinkageError covers a Flowing Fluids interface that changed shape
             FluidCompatLog.errorThrottled("ff-patch-flow-listeners", "Flowing Fluids flow listener patch failed; the original code runs instead", error);
             return false;
+        }
+    }
+
+    /**
+     * @return true when the cell holds a block without any fluid, so "remove all fluid here" must leave it alone
+     *         instead of turning it into air
+     */
+    public static boolean refuseToEraseBlockWithoutFluid(LevelAccessor level, BlockPos pos, Fluid fluid) {
+        try {
+            BlockState state = level.getBlockState(pos);
+            if (!RemovalGuard.wouldEraseABlockWithoutFluid(state)) {
+                return false;
+            }
+            // Evidence for the Flowing Fluids "air artifacts" report: which block, where, for which fluid
+            FluidCompatLog.errorThrottled("ff-patch-erase-nonfluid",
+                    "Flowing Fluids asked to remove all " + fluid + " at " + pos.toShortString() + " but the block there ("
+                            + state.getBlock() + ") holds no fluid. The block was kept.",
+                    new IllegalStateException("removeAllFluidAtPos on a block without fluid"));
+            return true;
+        } catch (RuntimeException | LinkageError error) {
+            return false; // Fail open: the original code runs as before
         }
     }
 

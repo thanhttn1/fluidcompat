@@ -20,7 +20,7 @@ import me.thanhtnt2.fluidcompat.config.FluidCompatModulesConfig;
 import net.neoforged.fml.loading.FMLPaths;
 
 /**
- * Dedicated log file ({@code <game folder>/logs/fluidcompact.log}) so developers and players can
+ * Dedicated log file ({@code <game folder>/logs/fluidcompat.log}) so developers and players can
  * share Fluid Compat's own trail without digging through latest.log.
  *
  * <p>Writing is synchronous on purpose: volume is tiny (verbose lines are throttled) and an
@@ -29,9 +29,9 @@ import net.neoforged.fml.loading.FMLPaths;
  */
 public final class FluidCompatLog {
 
-    private static final String LOG_FILE_NAME = "fluidcompact.log";
-    private static final String PREVIOUS_LOG_FILE_NAME = "fluidcompact-previous.log";
-    private static final String ROLLED_LOG_FILE_NAME = "fluidcompact-rolled.log";
+    private static final String LOG_FILE_NAME = "fluidcompat.log";
+    private static final String PREVIOUS_LOG_FILE_NAME = "fluidcompat-previous.log";
+    private static final String ROLLED_LOG_FILE_NAME = "fluidcompat-rolled.log";
     // Debug mode can write a lot. At this size the file is rolled over once, so one run never needs more than two files
     private static final long MAX_LOG_FILE_BYTES = 16L * 1024L * 1024L;
     private static final DateTimeFormatter TIMESTAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS", Locale.ROOT);

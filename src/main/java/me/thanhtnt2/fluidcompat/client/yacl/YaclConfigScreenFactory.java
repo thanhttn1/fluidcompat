@@ -38,14 +38,14 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class YaclConfigScreenFactory {
 
-    private static final String KEY_PREFIX = "fluidcompact.option.";
+    private static final String KEY_PREFIX = "fluidcompat.option.";
 
     private YaclConfigScreenFactory() {
     }
 
     public static Screen create(Screen parent) {
         return YetAnotherConfigLib.createBuilder()
-                .title(Component.translatable("fluidcompact.configuration.title"))
+                .title(Component.translatable("fluidcompat.configuration.title"))
                 .category(buildCoreCategory())
                 .category(buildModCompatListCategory())
                 .category(buildLoggingCategory())
@@ -58,8 +58,8 @@ public final class YaclConfigScreenFactory {
 
     private static ConfigCategory buildCoreCategory() {
         OptionGroup general = OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.core"))
-                .option(LabelOption.create(Component.translatable("fluidcompact.notice.unofficial").withStyle(ChatFormatting.GRAY)))
+                .name(Component.translatable("fluidcompat.group.core"))
+                .option(LabelOption.create(Component.translatable("fluidcompat.notice.unofficial").withStyle(ChatFormatting.GRAY)))
                 .option(toggle("enableFiniteFluids", FluidCompatConfig.ENABLE_FINITE_FLUIDS, true))
                 .option(choice("backendPreference", FluidCompatConfig.BACKEND_PREFERENCE, BackendPreference.class, true))
                 .option(toggle("finiteWater", FluidCompatConfig.FINITE_WATER, true))
@@ -67,15 +67,15 @@ public final class YaclConfigScreenFactory {
                 .option(toggle("finiteTaggedFluids", FluidCompatConfig.FINITE_TAGGED_FLUIDS, true))
                 .build();
         return ConfigCategory.createBuilder()
-                .name(Component.translatable("fluidcompact.tab.core"))
+                .name(Component.translatable("fluidcompat.tab.core"))
                 .group(general)
                 .build();
     }
 
     private static ConfigCategory buildModCompatListCategory() {
         ConfigCategory.Builder category = ConfigCategory.createBuilder()
-                .name(Component.translatable("fluidcompact.tab.mod_compat_list"))
-                .tooltip(Component.translatable("fluidcompact.tab.mod_compat_list.tooltip"))
+                .name(Component.translatable("fluidcompat.tab.mod_compat_list"))
+                .tooltip(Component.translatable("fluidcompat.tab.mod_compat_list.tooltip"))
                 .group(buildOverviewGroup())
                 .group(buildMasterGroup())
                 .group(buildModernIndustrializationGroup())
@@ -97,7 +97,7 @@ public final class YaclConfigScreenFactory {
 
     private static ConfigCategory buildLoggingCategory() {
         OptionGroup.Builder group = OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.logging"))
+                .name(Component.translatable("fluidcompat.group.logging"))
                 .option(toggle("logFileEnabled", FluidCompatModulesConfig.LOG_FILE_ENABLED, true))
                 .option(toggle("logDebug", FluidCompatModulesConfig.LOG_DEBUG_MODE, true))
                 .option(toggle("logVerbose", FluidCompatModulesConfig.LOG_VERBOSE, true))
@@ -106,7 +106,7 @@ public final class YaclConfigScreenFactory {
             group.option(LabelOption.create(Component.literal(FluidCompatLog.logFilePath().toString()).withStyle(ChatFormatting.GRAY)));
         }
         return ConfigCategory.createBuilder()
-                .name(Component.translatable("fluidcompact.tab.logging"))
+                .name(Component.translatable("fluidcompat.tab.logging"))
                 .group(group.build())
                 .build();
     }
@@ -115,8 +115,8 @@ public final class YaclConfigScreenFactory {
 
     private static OptionGroup buildOverviewGroup() {
         OptionGroup.Builder group = OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.overview"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.overview.desc")));
+                .name(Component.translatable("fluidcompat.group.overview"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.overview.desc")));
         for (CompatModule module : CompatModuleRegistry.snapshot()) {
             group.option(LabelOption.create(statusLine(module)));
         }
@@ -125,7 +125,7 @@ public final class YaclConfigScreenFactory {
 
     private static OptionGroup buildMasterGroup() {
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.general"))
+                .name(Component.translatable("fluidcompat.group.general"))
                 .option(toggle("compatEnabled", FluidCompatModulesConfig.COMPAT_ENABLED, true))
                 .build();
     }
@@ -133,8 +133,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildModernIndustrializationGroup() {
         boolean installed = isLoaded("modern_industrialization");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.mi"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.mi.desc")))
+                .name(Component.translatable("fluidcompat.group.mi"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.mi.desc")))
                 .option(slider("miDrainPercent", FluidCompatConfig.DRAIN_PERCENT, 1, 1000, 5, installed))
                 .option(slider("miMinTicks", FluidCompatConfig.MIN_TICKS_BETWEEN_INTAKES, 0, 6000, 20, installed))
                 .option(toggle("miDrainThinWater", FluidCompatModulesConfig.MI_PUMP_DRAIN_THIN_WATER, installed))
@@ -144,8 +144,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildMekanismGroup() {
         boolean installed = isLoaded("mekanism");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.mekanism"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.mekanism.desc")))
+                .name(Component.translatable("fluidcompat.group.mekanism"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.mekanism.desc")))
                 .option(toggle("electricPumpEnabled", FluidCompatModulesConfig.ELECTRIC_PUMP_ENABLED, installed))
                 .option(toggle("electricPumpWater", FluidCompatModulesConfig.ELECTRIC_PUMP_WATER, installed))
                 .option(toggle("electricPumpLava", FluidCompatModulesConfig.ELECTRIC_PUMP_LAVA, installed))
@@ -156,8 +156,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildMekanismElementsGroup() {
         boolean installed = isLoaded("mekanismelements");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.mekanism_elements"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.mekanism_elements.desc")))
+                .name(Component.translatable("fluidcompat.group.mekanism_elements"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.mekanism_elements.desc")))
                 .option(toggle("seawaterEnabled", FluidCompatModulesConfig.SEAWATER_PUMP_ENABLED, installed))
                 .option(slider("seawaterDrainPercent", FluidCompatModulesConfig.SEAWATER_DRAIN_PERCENT, 1, 1000, 5, installed))
                 .option(slider("seawaterMinTicks", FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES, 0, 6000, 20, installed))
@@ -168,8 +168,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildMekanismDieselGeneratorsGroup() {
         boolean installed = isLoaded("mekanismdieselgenerators");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.mekanism_diesel_generators"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.mekanism_diesel_generators.desc")))
+                .name(Component.translatable("fluidcompat.group.mekanism_diesel_generators"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.mekanism_diesel_generators.desc")))
                 .option(toggle("mdgPumpsEnabled", FluidCompatModulesConfig.MDG_PUMPS_ENABLED, installed))
                 .build();
     }
@@ -177,8 +177,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildImmersiveEngineeringGroup() {
         boolean installed = isLoaded("immersiveengineering");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.immersiveengineering"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.immersiveengineering.desc")))
+                .name(Component.translatable("fluidcompat.group.immersiveengineering"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.immersiveengineering.desc")))
                 .option(toggle("iePumpFinite", FluidCompatModulesConfig.IE_PUMP_FINITE, installed))
                 .option(toggle("iePumpNoCobble", FluidCompatModulesConfig.IE_PUMP_NO_COBBLE, installed))
                 .option(toggle("iePumpDrainThin", FluidCompatModulesConfig.IE_PUMP_DRAIN_THIN, installed))
@@ -188,8 +188,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildAlexsCavesGroup() {
         boolean installed = isLoaded("alexscaves");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.alexscaves"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.alexscaves.desc")))
+                .name(Component.translatable("fluidcompat.group.alexscaves"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.alexscaves.desc")))
                 .option(toggle("alexsDrainEnabled", FluidCompatModulesConfig.ALEXS_DRAIN_ENABLED, installed))
                 .option(slider("alexsDrainMaxLevels", FluidCompatModulesConfig.ALEXS_DRAIN_MAX_LEVELS_PER_CYCLE, 8, 8192, 8, installed))
                 .option(slider("alexsDrainInterval", FluidCompatModulesConfig.ALEXS_DRAIN_INTERVAL_TICKS, 5, 200, 5, installed))
@@ -201,8 +201,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildPneumaticCraftGroup() {
         boolean installed = isLoaded("pneumaticcraft");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.pneumaticcraft"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.pneumaticcraft.desc")))
+                .name(Component.translatable("fluidcompat.group.pneumaticcraft"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.pneumaticcraft.desc")))
                 .option(toggle("pncPickupEnabled", FluidCompatModulesConfig.PNC_PICKUP_ENABLED, installed))
                 .option(toggle("pncLeftoverWater", FluidCompatModulesConfig.PNC_LEFTOVER_WATER, installed))
                 .option(toggle("pncLeftoverWithoutUpgrade", FluidCompatModulesConfig.PNC_LEFTOVER_WITHOUT_UPGRADE, installed))
@@ -215,8 +215,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildCreateGroup() {
         boolean installed = isLoaded("create");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.create"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.create.desc")))
+                .name(Component.translatable("fluidcompat.group.create"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.create.desc")))
                 .option(toggle("createEnabled", FluidCompatModulesConfig.CREATE_ENABLED, installed))
                 .option(toggle("createExclude", FluidCompatModulesConfig.CREATE_EXCLUDE_BLOCKS, installed))
                 .build();
@@ -224,8 +224,8 @@ public final class YaclConfigScreenFactory {
 
     private static OptionGroup buildAutoBalancedGroup() {
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.auto_balanced"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.auto_balanced.desc")))
+                .name(Component.translatable("fluidcompat.group.auto_balanced"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.auto_balanced.desc")))
                 .option(toggle("autoBalancedEnabled", FluidCompatModulesConfig.AUTO_BALANCED_ENABLED, true))
                 .option(toggle("autoBalancedFollowFf", FluidCompatModulesConfig.AUTO_BALANCED_FOLLOW_FLOWING_FLUIDS, true))
                 .option(slider("autoBalancedTarget", FluidCompatModulesConfig.AUTO_BALANCED_TARGET_MSPT, 10, 100, 1, true))
@@ -236,8 +236,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildFluidloggedGroup() {
         boolean installed = isLoaded("fluidlogged");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.fluidlogged"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.fluidlogged.desc")))
+                .name(Component.translatable("fluidcompat.group.fluidlogged"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.fluidlogged.desc")))
                 .option(toggle("fluidloggedEnabled", FluidCompatModulesConfig.FLUIDLOGGED_ENABLED, installed))
                 .option(toggle("fluidloggedRisk", FluidCompatModulesConfig.FLUIDLOGGED_ACCEPT_DUPLICATION_RISK, installed))
                 .option(toggle("fluidloggedFluidloggable", FluidCompatModulesConfig.FLUIDLOGGED_FLUIDLOGGABLE, installed))
@@ -249,8 +249,8 @@ public final class YaclConfigScreenFactory {
     private static OptionGroup buildFlowingFluidsPipesGroup() {
         boolean installed = isLoaded("flowing_fluids");
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.flowing_fluids_pipes"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.flowing_fluids_pipes.desc")))
+                .name(Component.translatable("fluidcompat.group.flowing_fluids_pipes"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.flowing_fluids_pipes.desc")))
                 .option(toggle("ffPipesEnabled", FluidCompatModulesConfig.FF_PIPES_ENABLED, installed))
                 .option(toggle("ffPipesNonDisplacers", FluidCompatModulesConfig.FF_PIPES_NON_DISPLACERS, installed))
                 .option(choice("ffPipesWaterlogMode", FluidCompatModulesConfig.FF_PIPES_WATERLOG_MODE, WaterlogFlowOverride.class, installed))
@@ -274,8 +274,8 @@ public final class YaclConfigScreenFactory {
                 .available(installed)
                 .build();
         return OptionGroup.createBuilder()
-                .name(Component.translatable("fluidcompact.group.flowing_fluid_patches"))
-                .description(OptionDescription.of(Component.translatable("fluidcompact.group.flowing_fluid_patches.desc")))
+                .name(Component.translatable("fluidcompat.group.flowing_fluid_patches"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.flowing_fluid_patches.desc")))
                 .option(disablePatches)
                 .build();
     }
@@ -337,7 +337,7 @@ public final class YaclConfigScreenFactory {
             case DISABLED, PENDING -> ChatFormatting.YELLOW;
             case MISSING_MOD -> ChatFormatting.GRAY;
         };
-        Component label = Component.translatable("fluidcompact.status." + status.name().toLowerCase(java.util.Locale.ROOT));
+        Component label = Component.translatable("fluidcompat.status." + status.name().toLowerCase(java.util.Locale.ROOT));
         return Component.literal(module.displayName() + ": ").append(label.copy().withStyle(color));
     }
 

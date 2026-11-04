@@ -3,7 +3,7 @@ package me.thanhtnt2.fluidcompat.config;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
- * COMMON config, stored in {@code config/fluidcompact-common.toml}.
+ * COMMON config, stored in {@code config/fluidcompat-common.toml}.
  * Every gameplay value lives here so modpack authors never have to touch code.
  */
 public final class FluidCompatConfig {
@@ -38,7 +38,7 @@ public final class FluidCompatConfig {
                 .comment("Pumps drain lava from the world instead of creating it.")
                 .define("finiteLava", true);
         FINITE_TAGGED_FLUIDS = BUILDER
-                .comment("Also treat every fluid in the tag fluidcompact:managed_fluids as finite.")
+                .comment("Also treat every fluid in the tag fluidcompat:managed_fluids as finite.")
                 .define("finiteTaggedFluids", true);
         BUILDER.pop();
 

@@ -23,16 +23,16 @@ enum PumpComponentProvider implements IBlockComponentProvider {
             return;
         }
         boolean finite = data.getBoolean(PumpJadeKeys.FINITE);
-        tooltip.add(Component.translatable(finite ? "jade.fluidcompact.pump.finite" : "jade.fluidcompact.pump.infinite")
+        tooltip.add(Component.translatable(finite ? "jade.fluidcompat.pump.finite" : "jade.fluidcompat.pump.infinite")
                 .withStyle(finite ? ChatFormatting.AQUA : ChatFormatting.GRAY));
         if (!finite || !data.contains(PumpJadeKeys.TOTAL_DRAINED_LEVELS)) {
             return;
         }
-        tooltip.add(Component.translatable("jade.fluidcompact.pump.drained",
+        tooltip.add(Component.translatable("jade.fluidcompat.pump.drained",
                 formatBuckets(data.getLong(PumpJadeKeys.TOTAL_DRAINED_LEVELS))));
         long starvedIntakes = data.getLong(PumpJadeKeys.STARVED_INTAKES);
         if (starvedIntakes > 0L) {
-            tooltip.add(Component.translatable("jade.fluidcompact.pump.starved", starvedIntakes)
+            tooltip.add(Component.translatable("jade.fluidcompat.pump.starved", starvedIntakes)
                     .withStyle(ChatFormatting.RED));
         }
     }

@@ -3,6 +3,7 @@ package me.thanhtnt2.fluidcompat.compat.flowingfluids.patches.guard;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -27,6 +28,11 @@ public final class FlowingFluidsShapes {
     private static final String ACCEPT_RECENT_FLOW = "ff$acceptRecentFlow";
     private static final String ACCEPT_RECENT_FLOW_DESC =
             "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/Fluid;Z)V";
+
+    private static final String REMOVE_ALL_FLUID = "removeAllFluidAtPos";
+    private static final String REMOVE_ALL_FLUID_DESC =
+            "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;"
+                    + "Lnet/minecraft/world/level/material/Fluid;)Z";
 
     private static final String REMOVE_FLUID = "removeFluidAmountFromPos";
     private static final String REMOVE_FLUID_DESC =
@@ -96,6 +102,34 @@ public final class FlowingFluidsShapes {
             }
         }
         return reachesCollector;
+    }
+
+    /**
+     * True while {@code FFFluidUtils.removeAllFluidAtPos} still turns any non-air block into air without ever asking
+     * whether that block holds fluid: it reaches {@code Blocks.AIR} and {@code setBlock} but has no
+     * {@code getFluidState} call and no {@code FluidState} access at all.
+     */
+    public static boolean removeAllFluidErasesAnyBlock(ClassNode fluidUtils) {
+        MethodNode method = find(fluidUtils, REMOVE_ALL_FLUID, REMOVE_ALL_FLUID_DESC);
+        if (method == null) {
+            return false;
+        }
+        boolean placesAir = false;
+        boolean setsBlock = false;
+        for (AbstractInsnNode instruction : method.instructions.toArray()) {
+            if (instruction instanceof FieldInsnNode field && "AIR".equals(field.name)) {
+                placesAir = true;
+            }
+            if (instruction instanceof MethodInsnNode call) {
+                if ("setBlock".equals(call.name)) {
+                    setsBlock = true;
+                }
+                if ("getFluidState".equals(call.name) || "isEmpty".equals(call.name) && call.owner.endsWith("FluidState")) {
+                    return false; // Flowing Fluids already looks at the fluid state here
+                }
+            }
+        }
+        return placesAir && setsBlock;
     }
 
     private static boolean isZeroComparison(AbstractInsnNode instruction) {

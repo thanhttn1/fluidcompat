@@ -2,6 +2,18 @@
 
 Versioning: `2.X.0` for a big update (new mod support), `2.X.Y` for a small update or fix.
 
+## 2.2.2
+
+* **The mod id, config files, log files and tag ids now use the name Fluid Compat.** Your old settings are copied
+  automatically the first time you start (`fluidcompact-common.toml` and `fluidcompact-compat.toml` are copied to
+  `fluidcompat-common.toml` and `fluidcompat-compat.toml`, the old files stay where they are). Datapacks that used the
+  tags `fluidcompact:managed_fluids`, `finite_pumps`, `compat_finite_pumps` or `fluid_passable_blocks` must now use the
+  `fluidcompat:` namespace. Per-hopper settings and pump counters saved in existing worlds start fresh.
+* **New Flowing Fluids patch: keep blocks that hold no fluid.** When Flowing Fluids is told to remove all fluid from a
+  cell, it turns whatever is there into air, even a solid block. The patch keeps such a block and writes the position
+  and block to the log. This is a safety net for the "air blocks appear in water" reports, not a confirmed fix of them.
+  Like the other patches it switches itself off if Flowing Fluids changes that code, and `disablePatches` turns it off.
+
 ## 2.2.1
 
 * **The master switch now really is a master switch.** `general.compatEnabled = false` used to stop only the setup of
@@ -87,7 +99,7 @@ these final changes:
 * Safer hook loading: the PneumaticCraft pickup hook is now tied to the one flag it was written for
   (`dontUpdateInfiniteWaterSources`), and the Modern Industrialization thin-water hook checks the method it redirects
   and says so in the log when it has to stay off.
-* `fluidcompact.log` rolls over at 16 MB (the first part of the run goes to `fluidcompact-rolled.log`), so debug mode
+* `fluidcompat.log` rolls over at 16 MB (the first part of the run goes to `fluidcompat-rolled.log`), so debug mode
   can no longer fill a disk. The orphan-pipe cleanup also logs a repeating error only once a minute.
 * The debug snapshot now shows `leftoverNeedsOutput`, the option that is actually used.
 * Worlds saved by 1.2.x and 1.3.x load unchanged. The old `requireOutputContainer` key stays in the config file, ignored;

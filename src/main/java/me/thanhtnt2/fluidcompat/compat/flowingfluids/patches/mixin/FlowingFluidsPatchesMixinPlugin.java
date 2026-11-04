@@ -27,9 +27,7 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
     public static final String MODULE_ID = "flowing_fluid_patches";
     public static final String LISTENER_PATCH_ID = MODULE_ID + ".flow_listeners";
     public static final String REMOVAL_PATCH_ID = MODULE_ID + ".negative_removal";
-
-    private static final String FLUID_UTILS_CLASS = "traben.flowing_fluids.FFFluidUtils";
-    private static final String API_IMPLEMENTATION_CLASS = "traben.flowing_fluids.api.FlowingFluidsApiImpl";
+    public static final String ERASE_PATCH_ID = MODULE_ID + ".erase_only_fluid_blocks";
 
     // Read once: the answer cannot change while the game runs, and it is asked once per mixin class
     private String reasonToStayOff;
@@ -44,7 +42,8 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
 
     @Override
     public boolean shouldApplyMixin(String targetClass, String mixinClassName) {
-        String patchId = patchIdOf(targetClass);
+        // Keyed by the mixin class, not the target: two of our patches share FFFluidUtils
+        String patchId = patchIdOf(mixinClassName);
         if (patchId == null) {
             return false; // Not one of ours: never apply something this plugin does not know
         }
@@ -53,12 +52,15 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
         return apply;
     }
 
-    private static String patchIdOf(String targetClass) {
-        if (FLUID_UTILS_CLASS.equals(targetClass)) {
+    private static String patchIdOf(String mixinClassName) {
+        if (mixinClassName.endsWith(".FluidUtilsFlowListenerMixin")) {
             return LISTENER_PATCH_ID;
         }
-        if (API_IMPLEMENTATION_CLASS.equals(targetClass)) {
+        if (mixinClassName.endsWith(".FlowingFluidsApiNegativeRemovalMixin")) {
             return REMOVAL_PATCH_ID;
+        }
+        if (mixinClassName.endsWith(".FluidUtilsEraseOnlyFluidBlocksMixin")) {
+            return ERASE_PATCH_ID;
         }
         return null;
     }
@@ -73,9 +75,14 @@ public final class FlowingFluidsPatchesMixinPlugin implements IMixinConfigPlugin
             LOGGER.info("[{}] {} not found, patch skipped", patchId, targetClass);
             return false;
         }
-        boolean stillBroken = LISTENER_PATCH_ID.equals(patchId)
-                ? FlowingFluidsShapes.flowListenerLookupIsBroken(target)
-                : FlowingFluidsShapes.removalAcceptsNegativeAmounts(target);
+        boolean stillBroken;
+        if (LISTENER_PATCH_ID.equals(patchId)) {
+            stillBroken = FlowingFluidsShapes.flowListenerLookupIsBroken(target);
+        } else if (REMOVAL_PATCH_ID.equals(patchId)) {
+            stillBroken = FlowingFluidsShapes.removalAcceptsNegativeAmounts(target);
+        } else {
+            stillBroken = FlowingFluidsShapes.removeAllFluidErasesAnyBlock(target);
+        }
         if (!stillBroken) {
             LOGGER.info("[{}] {} does not have the expected flaw (fixed or changed), patch skipped", patchId, targetClass);
         }

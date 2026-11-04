@@ -31,14 +31,14 @@ Fluid removal goes through the Flowing Fluids API.
 | **Alex's Caves** | Drain moves finite fluid level by level (Copper Valve needs nothing) |
 | **Create** | Handled by Flowing Fluids itself; Fluid Compat only checks the combination |
 | **Immersive Petroleum** | Nothing needed: its pumpjacks draw from underground reservoirs |
-| **Flowing Fluids** (bug-fix patches) | Water wheels get their flow updates; negative removal amounts no longer create fluid. Can be switched off |
+| **Flowing Fluids** (bug-fix patches) | Water wheels get their flow updates; negative removal amounts no longer create fluid; blocks without fluid are not erased. Can be switched off |
 | **Fluidlogged** | Optional, off by default (it can duplicate water): lets fluid enter pipes |
 | **Jade, JEI, YACL** | Pump tooltip, pump info page, and the "Mod Compat List" config tab |
 
 Pipes and cables (Modern Industrialization, Modern Dynamics, XNet, Refined Storage, Mekanism transmitters) never
 take fluid from the world, so they become finite automatically once their pump is. Lava, which Flowing Fluids does
 not flow by default, falls back to a small built-in vanilla drain. Fluid Compat writes its own log to
-`logs/fluidcompact.log`.
+`logs/fluidcompat.log`.
 
 ## Requirements
 
@@ -52,13 +52,13 @@ not flow by default, falls back to a small built-in vanilla drain. Fluid Compat 
 * `DrainBackendRegistry.register(...)` to plug in another fluid-physics system
 * `FluidIntakeEvent.Pre / Post` on `NeoForge.EVENT_BUS` to cancel or adjust intakes
 * `CompatModuleRegistry.register(...)` to add an isolated compat module
-* Tags `fluidcompact:managed_fluids`, `fluidcompact:finite_pumps`, `fluidcompact:fluid_passable_blocks`
+* Tags `fluidcompat:managed_fluids`, `fluidcompat:finite_pumps`, `fluidcompat:fluid_passable_blocks`
 
 ## Reporting bugs
 
 Report Fluid Compat bugs to me (thanhttn1) through GitHub issues and Discord
 (thanhnhnh), **never to the authors of Flowing Fluids or the other mods**.
-Please attach `logs/fluidcompact.log`.
+Please attach `logs/fluidcompat.log`.
 
 ## Credits and license
 

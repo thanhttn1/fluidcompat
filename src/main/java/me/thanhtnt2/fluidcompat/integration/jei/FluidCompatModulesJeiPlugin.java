@@ -28,6 +28,6 @@ public final class FluidCompatModulesJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         BuiltInRegistries.ITEM.getTag(FluidCompatModulesTags.COMPAT_FINITE_PUMP_ITEMS).ifPresent(pumps ->
                 pumps.forEach(holder -> registration.addIngredientInfo(
-                        holder.value(), Component.translatable("jei.fluidcompact.compat_finite_pump"))));
+                        holder.value(), Component.translatable("jei.fluidcompat.compat_finite_pump"))));
     }
 }

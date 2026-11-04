@@ -8,7 +8,7 @@ package me.thanhtnt2.fluidcompat.api;
  */
 public final class FluidCompatApi {
 
-    public static final String MOD_ID = "fluidcompact";
+    public static final String MOD_ID = "fluidcompat";
 
     /** Bumped only when a breaking change is made to this package. */
     public static final int API_VERSION = 1;

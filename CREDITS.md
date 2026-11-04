@@ -19,8 +19,8 @@ What Fluid Compat does with it, stated plainly:
 * The goal is the opposite of copying: Fluid Compat teaches Flowing Fluids' world about other mods' water pumps
   (Modern Industrialization, Mekanism, ...) so those machines drain the world instead of creating fluid.
 * All the fluid physics people enjoy are Traben's work. Support the original mod.
-* Since 2.2.1 Fluid Compat also carries two small **mixin patches** for bugs inside Flowing Fluids (water wheel flow
-  updates and negative removal amounts). They contain none of Flowing Fluids' code: each one only names the class and
+* Since 2.2.1 Fluid Compat also carries three small **mixin patches** for bugs inside Flowing Fluids (water wheel flow
+  updates, negative removal amounts and blocks without fluid being erased). They contain none of Flowing Fluids' code: each one only names the class and
   method it repairs and runs its own replacement logic. They check the Flowing Fluids bytecode first, switch
   themselves off when Flowing Fluids fixes the bug, and can be disabled in the config (`flowing_fluid_patches`).
 * report Fluid Compat issues to me (via Github or Discord), please do not flood the author page.
@@ -50,7 +50,7 @@ What Fluid Compat does with it, stated plainly:
 **Report every Fluid Compat bug to me (thanhttn1), not to the author of Flowing Fluids or of any other mod.**
 Problems that show up only when Fluid Compat is installed are very likely mine.
 
-Please attach `logs/fluidcompact.log` (turn on `logging.debugMode` first if you can).
+Please attach `logs/fluidcompat.log` (turn on `logging.debugMode` first if you can).
 
 ## Other mods Fluid Compat works with
 

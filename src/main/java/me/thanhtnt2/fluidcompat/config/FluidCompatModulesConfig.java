@@ -5,7 +5,7 @@ import java.util.List;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
- * Settings of the compat modules, stored in {@code config/fluidcompact-compat.toml}.
+ * Settings of the compat modules, stored in {@code config/fluidcompat-compat.toml}.
  *
  * <p>It lives in its own file on purpose: the original {@link FluidCompatConfig} keys
  * (finite water, drain percent, ...) are never rewritten when a new mod gets supported.
@@ -99,13 +99,13 @@ public final class FluidCompatModulesConfig {
 
         BUILDER.push("logging");
         LOG_FILE_ENABLED = BUILDER
-                .comment("Write logs/fluidcompact.log in the game folder (the previous run is kept as fluidcompact-previous.log).")
+                .comment("Write logs/fluidcompat.log in the game folder (the previous run is kept as fluidcompat-previous.log).")
                 .define("fileEnabled", true);
         LOG_VERBOSE = BUILDER
                 .comment("Also log every fluid intake. Useful for bug reports, noisy otherwise.")
                 .define("verbose", false);
         LOG_DEBUG_MODE = BUILDER
-                .comment("DEBUG MODE: log EVERYTHING into logs/fluidcompact.log: full config dump, every loaded mod,",
+                .comment("DEBUG MODE: log EVERYTHING into logs/fluidcompat.log: full config dump, every loaded mod,",
                         "every fluid intake (no throttling) and every block update of pipes. Files can get very large.",
                         "Pipe update tracing only starts after a game restart.")
                 .define("debugMode", false);
@@ -135,7 +135,7 @@ public final class FluidCompatModulesConfig {
         BUILDER.push("create");
         CREATE_ENABLED = BUILDER
                 .comment("Create is supported by Flowing Fluids itself (see create_* in flowing_fluids.json). Fluid Compat adds no Create hooks;",
-                        "when this is true it only checks the combination at startup and writes the result to logs/fluidcompact.log.")
+                        "when this is true it only checks the combination at startup and writes the result to logs/fluidcompat.log.")
                 .define("enabled", true);
         CREATE_EXCLUDE_BLOCKS = BUILDER
                 .comment("Keep Create's blocks out of Fluid Compat's pipe features (non-displacers, pipe cleanup) so nothing overlaps with what",
@@ -148,13 +148,13 @@ public final class FluidCompatModulesConfig {
                 .comment("Force the Mekanism Electric Pump to really remove source blocks instead of duplicating them.")
                 .define("enabled", true);
         ELECTRIC_PUMP_WATER = BUILDER
-                .comment("Apply to water (still requires fluids.finiteWater in fluidcompact-common.toml).")
+                .comment("Apply to water (still requires fluids.finiteWater in fluidcompat-common.toml).")
                 .define("water", true);
         ELECTRIC_PUMP_LAVA = BUILDER
-                .comment("Apply to lava (still requires fluids.finiteLava in fluidcompact-common.toml).")
+                .comment("Apply to lava (still requires fluids.finiteLava in fluidcompat-common.toml).")
                 .define("lava", true);
         ELECTRIC_PUMP_TAGGED_FLUIDS = BUILDER
-                .comment("Apply to fluids in the tag fluidcompact:managed_fluids.")
+                .comment("Apply to fluids in the tag fluidcompat:managed_fluids.")
                 .define("taggedFluids", true);
         BUILDER.pop();
 
@@ -226,7 +226,7 @@ public final class FluidCompatModulesConfig {
                         FluidCompatModulesConfig::isNonBlankString);
         FLUIDLOGGED_EXTRA_BLOCKS = BUILDER
                 .comment("Extra entries: block ids like \"modid:block\" or block tags like \"#modid:tag\".",
-                        "Datapacks can also add blocks to the tag fluidcompact:fluid_passable_blocks.")
+                        "Datapacks can also add blocks to the tag fluidcompat:fluid_passable_blocks.")
                 .defineListAllowEmpty("extraBlocks", List.of(), () -> "",
                         FluidCompatModulesConfig::isNonBlankString);
         BUILDER.pop();
@@ -273,7 +273,7 @@ public final class FluidCompatModulesConfig {
         IE_PUMP_FINITE = BUILDER
                 .comment("Stop the Immersive Engineering Fluid Pump from making endless water or lava out of pools with two source",
                         "blocks. With this on it takes real source blocks out of the world (1000 mB per block) like it does for oil.",
-                        "Only applies to fluids Fluid Compat treats as finite, see fluidcompact-common.toml.")
+                        "Only applies to fluids Fluid Compat treats as finite, see fluidcompat-common.toml.")
                 .define("finitePump", true);
         IE_PUMP_NO_COBBLE = BUILDER
                 .comment("Immersive Engineering pumps replace every block they empty with cobblestone (its own pump_placeCobble option).",
@@ -292,7 +292,7 @@ public final class FluidCompatModulesConfig {
         MDG_PUMPS_ENABLED = BUILDER
                 .comment("Make the Create-powered Shaft Pump and Inline Pump of Mekanism Diesel Generators take water out of the world",
                         "instead of making it. Each tick they pump, the world pays for exactly the water the pump receives (see",
-                        "pumps.drainPercent in fluidcompact-common.toml). Needs Create; without it these pumps do not exist.")
+                        "pumps.drainPercent in fluidcompat-common.toml). Needs Create; without it these pumps do not exist.")
                 .define("enabled", true);
         BUILDER.pop();
 

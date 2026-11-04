@@ -9,6 +9,7 @@ import me.thanhtnt2.fluidcompat.compat.pneumaticcraft.PneumaticAttachments;
 import me.thanhtnt2.fluidcompat.compat.pneumaticcraft.network.PneumaticNetwork;
 import me.thanhtnt2.fluidcompat.config.FluidCompatModulesConfig;
 import me.thanhtnt2.fluidcompat.config.FluidCompatConfig;
+import me.thanhtnt2.fluidcompat.config.LegacyConfigMigration;
 import me.thanhtnt2.fluidcompat.core.FluidCompatAttachments;
 import me.thanhtnt2.fluidcompat.core.FluidCompatBootstrap;
 import me.thanhtnt2.fluidcompat.logging.FluidCompatLog;
@@ -22,12 +23,12 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 @Mod(FluidCompat.MODID)
 public final class FluidCompat {
 
-    // The technical id keeps its old spelling on purpose: it names the config files, the saved data of existing worlds
-    // (hopper settings), the tag ids and the language keys, and changing it would silently reset all of them
-    public static final String MODID = "fluidcompact";
+    public static final String MODID = "fluidcompat";
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public FluidCompat(IEventBus modEventBus, ModContainer modContainer) {
+        // Must come first: the configs are read from disk right after the constructors have run
+        LegacyConfigMigration.copyOldSettingsIfNeeded();
         FluidCompatAttachments.ATTACHMENT_TYPES.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, FluidCompatConfig.SPEC);
         modEventBus.addListener(this::onCommonSetup);
@@ -37,7 +38,7 @@ public final class FluidCompat {
     // Compat modules live in their own packages and config file; this is their single entry point
     private static void registerCompatLayer(IEventBus modEventBus, ModContainer modContainer) {
         FluidCompatLog.initialize();
-        modContainer.registerConfig(ModConfig.Type.COMMON, FluidCompatModulesConfig.SPEC, "fluidcompact-compat.toml");
+        modContainer.registerConfig(ModConfig.Type.COMMON, FluidCompatModulesConfig.SPEC, "fluidcompat-compat.toml");
         // Both are free of PneumaticCraft types, so registering them is safe whether or not it is installed
         PneumaticAttachments.ATTACHMENT_TYPES.register(modEventBus);
         modEventBus.addListener(PneumaticNetwork::onRegisterPayloads);
