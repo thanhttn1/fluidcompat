@@ -27,6 +27,8 @@ sourceSets.main.resources {
 
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
+    // Only the unit tests (src/test) need this: JUnit comes from Maven Central
+    mavenCentral()
 }
 
 base {
@@ -163,4 +165,15 @@ tasks.named('jar') {
     from('LICENSE.txt') {
         rename { "LICENSE_${project.mod_id}.txt" }
     }
+}
+
+// Unit tests: pure logic only (no Minecraft is started). They prove the logic of small classes, not the game.
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }

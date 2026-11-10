@@ -42,6 +42,7 @@ public final class FluidCompatModulesConfig {
     public static final ModConfigSpec.IntValue SEAWATER_DRAIN_PERCENT;
     public static final ModConfigSpec.IntValue SEAWATER_MIN_TICKS_BETWEEN_INTAKES;
     public static final ModConfigSpec.EnumValue<ShortfallBehavior> SEAWATER_SHORTFALL;
+    public static final ModConfigSpec.BooleanValue SEAWATER_DRAIN_THIN_WATER;
 
     public static final ModConfigSpec.BooleanValue MI_PUMP_DRAIN_THIN_WATER;
 
@@ -172,6 +173,11 @@ public final class FluidCompatModulesConfig {
         SEAWATER_SHORTFALL = BUILDER
                 .comment("When the world cannot pay a whole cycle: SCALE_DOWN produces less, STOP produces nothing.")
                 .defineEnum("shortfallBehavior", ShortfallBehavior.SCALE_DOWN);
+        SEAWATER_DRAIN_THIN_WATER = BUILDER
+                .comment("Let the Seawater Pump keep working when the water below it is a thin Flowing Fluids layer instead of a full",
+                        "source block. Every cycle the world pays for the seawater out of that very cell, so without this the pump",
+                        "stops after a cycle or two. Output is unchanged and always paid by the world.")
+                .define("drainThinWater", true);
         BUILDER.pop();
 
         BUILDER.push("pneumaticcraft_pickup");

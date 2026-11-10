@@ -99,6 +99,8 @@
   "fluidcompat.option.seawaterMinTicks.desc": "Minimum ticks between two drains of the same pump. 0 = no limit.",
   "fluidcompat.option.seawaterShortfall": "When Water Runs Short",
   "fluidcompat.option.seawaterShortfall.desc": "SCALE_DOWN produces less seawater, STOP produces none for that cycle.",
+  "fluidcompat.option.seawaterDrainThinWater": "Keep Running On Thin Water",
+  "fluidcompat.option.seawaterDrainThinWater.desc": "Let the Seawater Pump keep working when the water below it is a thin Flowing Fluids layer instead of a full source block. Without it the pump stops after a cycle or two, because each cycle takes its water from that same cell. Output is unchanged and always paid by the world.",
   "fluidcompat.option.fluidloggedEnabled": "Enabled",
   "fluidcompat.option.fluidloggedEnabled.desc": "Register the Fluid Compat addon in Fluidlogged. Needs a restart.",
   "fluidcompat.option.fluidloggedFluidloggable": "Pipes Hold Fluid",

@@ -162,6 +162,7 @@ public final class YaclConfigScreenFactory {
                 .option(slider("seawaterDrainPercent", FluidCompatModulesConfig.SEAWATER_DRAIN_PERCENT, 1, 1000, 5, installed))
                 .option(slider("seawaterMinTicks", FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES, 0, 6000, 20, installed))
                 .option(choice("seawaterShortfall", FluidCompatModulesConfig.SEAWATER_SHORTFALL, ShortfallBehavior.class, installed))
+                .option(toggle("seawaterDrainThinWater", FluidCompatModulesConfig.SEAWATER_DRAIN_THIN_WATER, installed))
                 .build();
     }
 

@@ -2,6 +2,28 @@
 
 Versioning: `2.X.0` for a big update (new mod support), `2.X.Y` for a small update or fix.
 
+## 2.2.4
+
+* **Fixed: the Mekanism Elements Seawater Pump stopped working after a cycle or two, even in an ocean.** The pump only
+  runs while the block below it is a full water source, and every cycle Fluid Compat makes the world pay for the seawater
+  out of that very block. With Flowing Fluids that block ends up as a thin layer, which the pump does not accept, so it
+  stopped for good (full energy, empty tank, "active: false"). The pump now also accepts a thin water layer below it.
+  The world still pays for every unit of seawater, so nothing is created; when the water really runs short the
+  existing "When Water Runs Short" setting decides what the pump makes.
+  * Switch: `mekanism_elements_seawater_pump.drainThinWater` (default true, also in the "Mod Compat List" tab).
+  * It checks the pump's code when it loads and switches itself off if that code looks different.
+* The log now says what really happened. "hook allowed" only means the code check passed; a separate line
+  "hook reached for the first time" appears when a pump cycle actually runs through Fluid Compat. A hook whose config
+  never loaded is reported as such.
+* Orphan pipe cleanup has a second per-tick limit: block entities visited (2048 per tick, shrunk while the server lags),
+  next to the 8 chunks per tick. A very dense industrial chunk can no longer make eight chunks' worth of work land in
+  one tick; at least one chunk is always processed so the queue still empties. With detail logging on, the log shows
+  chunks, block entities and microseconds of a cleanup tick.
+* Mekanism Diesel Generators pumps: the failure counter, the "switched off" state and the unused-water remainders are
+  reset when a server starts, so an integrated server restart begins clean. A dropped remainder can only cost the world.
+* First unit tests (`src/test`, JUnit 5): the thin water rule, the cleanup budget and the Seawater Pump code check.
+  They test small classes only; they say nothing about the running game.
+
 ## 2.2.3
 
 * **New: faster fluid interaction checks (big server tick saving with Flowing Fluids).** NeoForge checks whether a fluid
@@ -38,10 +60,10 @@ Versioning: `2.X.0` for a big update (new mod support), `2.X.Y` for a small upda
   keeps working with the switch off, as the option has always said.
 * **New: Flowing Fluids bug-fix patches.** Two small repairs for bugs inside Flowing Fluids itself:
   * Create water wheels were never told that water flowed next to them (Flowing Fluids looked for the wheel at the
-    wrong position).
+    wrong position). Edit: Traben has a fix for this bug (version 1.0.8), but there is no need to disable the patch, as a bypass mechanism is already in place.
   * A mod asking Flowing Fluids to remove a *negative* amount of fluid turned a thin water layer into a full source
     block. Such a request is now refused and logged with the name of the caller.
-
+    
   Each patch checks the Flowing Fluids code when the game loads and switches itself off if Flowing Fluids already
   fixed it or changed it. Turn them all off with `flowing_fluid_patches.disablePatches` (game restart needed; also in
   the "Mod Compat List" tab). `general.compatEnabled = false` turns them off too.

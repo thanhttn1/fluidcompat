@@ -42,6 +42,9 @@ final class OrphanPipeWaterJanitor {
 
     // Upper bound of chunks examined in one tick: a full 81-chunk scan is spread over about ten ticks
     private static final int CHUNKS_PER_TICK = 8;
+    // Chunks differ hugely in cost, so the work is also limited by block entities visited: a dense industrial chunk
+    // uses up most of a tick's budget by itself, an empty one costs nothing
+    private static final int BLOCK_ENTITIES_PER_TICK = 2048;
 
     private final Set<Block> pipes;
     // Chunks still waiting for the current scan, per dimension. Server thread only, and it holds plain
@@ -118,24 +121,32 @@ final class OrphanPipeWaterJanitor {
 
     private void cleanPendingChunks(ServerLevel level, LongArrayFIFOQueue pending) {
         int cleaned = 0;
+        long startNanos = System.nanoTime();
         // Housekeeping steps back while the server lags: the same slowdown that stretches the scan interval
-        int budget = Math.max(1, CHUNKS_PER_TICK / AutoBalance.slowdown(level.getServer()));
-        for (; budget > 0 && !pending.isEmpty(); budget--) {
+        CleanupBudget budget = new CleanupBudget(CHUNKS_PER_TICK, BLOCK_ENTITIES_PER_TICK, AutoBalance.slowdown(level.getServer()));
+        while (!pending.isEmpty() && budget.mayTakeChunk()) {
             long chunk = pending.dequeueLong();
-            cleaned += cleanChunk(level, ChunkPos.getX(chunk), ChunkPos.getZ(chunk));
+            cleaned += cleanChunk(level, ChunkPos.getX(chunk), ChunkPos.getZ(chunk), budget);
         }
         if (cleaned > 0) {
             FluidCompatLog.debug("[flowing_fluids_pipes] cleaned {} orphan waterlogged pipe(s) in {}", cleaned, level.dimension().location());
         }
+        if (FluidCompatLog.isDetailLoggingActive() && budget.chunksTaken() > 0) {
+            // The measurement behind the budget: what one cleanup tick really visited and how long it took
+            FluidCompatLog.debugThrottled("janitor-tick", "[flowing_fluids_pipes] cleanup tick: chunks={} blockEntities={} pendingChunks={} micros={}",
+                    budget.chunksTaken(), budget.blockEntitiesVisited(), pending.size(), (System.nanoTime() - startNanos) / 1000L);
+        }
     }
 
-    private int cleanChunk(ServerLevel level, int chunkX, int chunkZ) {
+    private int cleanChunk(ServerLevel level, int chunkX, int chunkZ, CleanupBudget budget) {
         // getChunkNow never loads or generates a chunk, it only returns one that is already there.
         // A chunk that unloaded while it waited in the queue is simply skipped
         LevelChunk chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
         if (chunk == null || chunk.getBlockEntities().isEmpty()) {
+            budget.tookChunk(0);
             return 0;
         }
+        budget.tookChunk(chunk.getBlockEntities().size());
         int cleaned = 0;
         for (BlockPos pos : findOrphans(level, chunk)) {
             cleaned += drainPipe(level, pos);

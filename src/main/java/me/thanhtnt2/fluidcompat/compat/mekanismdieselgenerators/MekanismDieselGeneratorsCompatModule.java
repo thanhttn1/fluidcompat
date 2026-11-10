@@ -6,6 +6,8 @@ import me.thanhtnt2.fluidcompat.compat.mekanismdieselgenerators.mixin.MekanismDi
 import me.thanhtnt2.fluidcompat.config.FluidCompatModulesConfig;
 import me.thanhtnt2.fluidcompat.logging.FluidCompatLog;
 import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 /**
  * Mekanism Diesel Generators. Its only machines that take water from the world are the Shaft Pump and the Inline Pump,
@@ -43,6 +45,8 @@ public final class MekanismDieselGeneratorsCompatModule implements CompatModule 
             FluidCompatLog.info("[mekanism_diesel_generators] pump hook disabled in config");
             return;
         }
+        // The breaker and the per-pump remainders are static, so each server start begins with a clean state
+        NeoForge.EVENT_BUS.addListener((ServerStartingEvent event) -> MdgPumpBridge.resetForNewServer());
         ensurePumpClassIsLoaded();
         if (CompatMixinState.isApplied(ID)) {
             FluidCompatLog.info("[mekanism_diesel_generators] Shaft Pump and Inline Pump hook active");

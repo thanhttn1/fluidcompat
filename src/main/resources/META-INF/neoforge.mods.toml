@@ -23,6 +23,9 @@ config="${mod_id}.compat.mekanism.mixins.json"
 config="${mod_id}.compat.mekanismelements.mixins.json"
 
 [[mixins]]
+config="${mod_id}.compat.mekanismelements.thinwater.mixins.json"
+
+[[mixins]]
 config="${mod_id}.compat.mekanismdieselgenerators.mixins.json"
 
 [[mixins]]

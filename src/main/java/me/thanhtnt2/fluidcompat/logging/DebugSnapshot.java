@@ -58,9 +58,10 @@ public final class DebugSnapshot {
         FluidCompatLog.info("config[mekanism_electric_pump] enabled={} water={} lava={} tagged={}",
                 FluidCompatModulesConfig.ELECTRIC_PUMP_ENABLED.get(), FluidCompatModulesConfig.ELECTRIC_PUMP_WATER.get(),
                 FluidCompatModulesConfig.ELECTRIC_PUMP_LAVA.get(), FluidCompatModulesConfig.ELECTRIC_PUMP_TAGGED_FLUIDS.get());
-        FluidCompatLog.info("config[mekanism_elements_seawater_pump] enabled={} drainPercent={} minTicks={} shortfall={}",
+        FluidCompatLog.info("config[mekanism_elements_seawater_pump] enabled={} drainPercent={} minTicks={} shortfall={} drainThinWater={}",
                 FluidCompatModulesConfig.SEAWATER_PUMP_ENABLED.get(), FluidCompatModulesConfig.SEAWATER_DRAIN_PERCENT.get(),
-                FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES.get(), FluidCompatModulesConfig.SEAWATER_SHORTFALL.get());
+                FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES.get(), FluidCompatModulesConfig.SEAWATER_SHORTFALL.get(),
+                FluidCompatModulesConfig.SEAWATER_DRAIN_THIN_WATER.get());
         FluidCompatLog.info("config[mekanism_diesel_generators] enabled={}", FluidCompatModulesConfig.MDG_PUMPS_ENABLED.get());
         FluidCompatLog.info("config[auto_balanced] enabled={} followFlowingFluids={} targetMs={} maxSlowdown={}",
                 FluidCompatModulesConfig.AUTO_BALANCED_ENABLED.get(), FluidCompatModulesConfig.AUTO_BALANCED_FOLLOW_FLOWING_FLUIDS.get(),

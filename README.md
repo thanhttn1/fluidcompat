@@ -24,7 +24,7 @@ Fluid removal goes through the Flowing Fluids API.
 | --- | --- |
 | **Modern Industrialization** | Bronze, Steel and Electric Water Pumps drain the world, including thin water layers |
 | **Mekanism** | Electric Pump removes the source blocks it pumps |
-| **Mekanism Elements** | Seawater Pump drains the water source below it |
+| **Mekanism Elements** | Seawater Pump drains the water below it (full source or thin Flowing Fluids layer) |
 | **Mekanism Diesel Generators** (with Create) | Shaft Pump and Inline Pump drain the world instead of making water |
 | **PneumaticCraft: Repressurized** | Liquid Hopper (also thin leftover water) and Gas Lift stop duplicating water |
 | **Immersive Engineering** | Fluid Pump takes real source blocks, empties ponds fully, leaves no cobblestone |

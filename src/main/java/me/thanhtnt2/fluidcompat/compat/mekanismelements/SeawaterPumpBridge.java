@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.thanhtnt2.fluidcompat.FluidCompat;
 import me.thanhtnt2.fluidcompat.api.FiniteFluidService;
+import me.thanhtnt2.fluidcompat.compat.CompatMixinState;
 import me.thanhtnt2.fluidcompat.compat.common.CompatGate;
 import me.thanhtnt2.fluidcompat.api.FluidCompatApi;
 import me.thanhtnt2.fluidcompat.api.FluidIntakeRequest;
@@ -31,6 +32,7 @@ public final class SeawaterPumpBridge {
 
     // The pump only works with a water source directly below it
     private static final Fluid CONSUMED_FLUID = Fluids.WATER;
+    private static final String HOOK_ID = "mekanism_elements.charge";
 
     private SeawaterPumpBridge() {
     }
@@ -62,6 +64,9 @@ public final class SeawaterPumpBridge {
             return producedSeawater;
         }
 
+        if (CompatMixinState.markHookReached(HOOK_ID)) {
+            FluidCompatLog.info("[mekanism_elements] Seawater Pump hook reached for the first time at " + pump.getBlockPos().toShortString());
+        }
         long gameTime = level.getGameTime();
         PumpStatistics statistics = pump.getData(FluidCompatAttachments.PUMP_STATISTICS.get());
         int minTicks = FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES.get();

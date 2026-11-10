@@ -50,6 +50,21 @@ public final class MdgPumpBridge {
     }
 
     /**
+     * Forgets the failure counter, the switched-off state and the per-pump remainders. The integrated server is stopped
+     * and started again inside one game session, and a pump that tripped the breaker in one world must not stay
+     * unlimited in the next one. A dropped remainder is water the world paid for and nobody received, so this can
+     * only cost the world, never give a pump free water.
+     */
+    static void resetForNewServer() {
+        if (switchedOff) {
+            FluidCompatLog.info("[mekanism_diesel_generators] a new server started, the pump hook is switched on again");
+        }
+        consecutiveFailures = 0;
+        switchedOff = false;
+        PAID_BUT_UNUSED.clear();
+    }
+
+    /**
      * @param inletCell the world block the pump is drawing from, or {@code null} if the hook could not note it
      * @param requested what the pump is about to put into its tank
      * @return what the pump may put into its tank instead: the same stack when the world could pay for it,
