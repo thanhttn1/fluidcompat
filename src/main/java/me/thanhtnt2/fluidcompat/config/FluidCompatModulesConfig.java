@@ -52,6 +52,11 @@ public final class FluidCompatModulesConfig {
 
     public static final ModConfigSpec.BooleanValue MDG_PUMPS_ENABLED;
 
+    public static final ModConfigSpec.BooleanValue ENDERIO_ENABLED;
+    public static final ModConfigSpec.BooleanValue ENDERIO_CONDUITS_AS_PIPES;
+    public static final ModConfigSpec.BooleanValue ENDERIO_DRAIN_THIN_WATER;
+    public static final ModConfigSpec.BooleanValue ENDERIO_NIARD_REFUND;
+
     public static final ModConfigSpec.BooleanValue ALEXS_DRAIN_ENABLED;
     public static final ModConfigSpec.IntValue ALEXS_DRAIN_MAX_LEVELS_PER_CYCLE;
     public static final ModConfigSpec.IntValue ALEXS_DRAIN_INTERVAL_TICKS;
@@ -301,6 +306,28 @@ public final class FluidCompatModulesConfig {
                         "instead of making it. Each tick they pump, the world pays for exactly the water the pump receives (see",
                         "pumps.drainPercent in fluidcompat-common.toml). Needs Create; without it these pumps do not exist.")
                 .define("enabled", true);
+        BUILDER.pop();
+
+        BUILDER.push("enderio");
+        ENDERIO_ENABLED = BUILDER
+                .comment("Ender IO support: the Drain and the Niard (fluid placer) work with finite fluids, see the keys below.",
+                        "general.compatEnabled = false turns the hooks off too.")
+                .define("enabled", true);
+        ENDERIO_CONDUITS_AS_PIPES = BUILDER
+                .comment("Treat the Ender IO conduit bundle like the other pipes: Flowing Fluids lets it stay submerged instead of",
+                        "draining or displacing the water around it, and the orphan pipe cleanup also looks at it.",
+                        "Needs flowing_fluids_pipes.enabled and a game restart.")
+                .define("conduitBundlesAsPipes", true);
+        ENDERIO_DRAIN_THIN_WATER = BUILDER
+                .comment("Let the Ender IO Drain also take the thin, non-source layers Flowing Fluids leaves behind, so a pond can be",
+                        "emptied completely, and keep running when the block under it is such a layer. A layer is taken as exactly the",
+                        "fluid it holds (125 mB per level), paid by the world. Whole source blocks stay Ender IO's own business.")
+                .define("drainThinFluids", true);
+        ENDERIO_NIARD_REFUND = BUILDER
+                .comment("When the Niard turns a thin layer of its own fluid into a full source block it pays a whole bucket, although",
+                        "the layer already held part of it, so that part was lost. With this on, the Niard only pays what the world",
+                        "really gains.")
+                .define("niardRefundReplacedLevels", true);
         BUILDER.pop();
 
         BUILDER.push("alexscaves_drain");

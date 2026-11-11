@@ -63,6 +63,9 @@ public final class DebugSnapshot {
                 FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES.get(), FluidCompatModulesConfig.SEAWATER_SHORTFALL.get(),
                 FluidCompatModulesConfig.SEAWATER_DRAIN_THIN_WATER.get());
         FluidCompatLog.info("config[mekanism_diesel_generators] enabled={}", FluidCompatModulesConfig.MDG_PUMPS_ENABLED.get());
+        FluidCompatLog.info("config[enderio] enabled={} conduitBundlesAsPipes={} drainThinFluids={} niardRefundReplacedLevels={}",
+                FluidCompatModulesConfig.ENDERIO_ENABLED.get(), FluidCompatModulesConfig.ENDERIO_CONDUITS_AS_PIPES.get(),
+                FluidCompatModulesConfig.ENDERIO_DRAIN_THIN_WATER.get(), FluidCompatModulesConfig.ENDERIO_NIARD_REFUND.get());
         FluidCompatLog.info("config[auto_balanced] enabled={} followFlowingFluids={} targetMs={} maxSlowdown={}",
                 FluidCompatModulesConfig.AUTO_BALANCED_ENABLED.get(), FluidCompatModulesConfig.AUTO_BALANCED_FOLLOW_FLOWING_FLUIDS.get(),
                 FluidCompatModulesConfig.AUTO_BALANCED_TARGET_MSPT.get(), FluidCompatModulesConfig.AUTO_BALANCED_MAX_SLOWDOWN.get());

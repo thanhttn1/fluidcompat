@@ -1,0 +1,16 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "me.thanhtnt2.fluidcompat.compat.enderio.mixin.impl",
+  "plugin": "me.thanhtnt2.fluidcompat.compat.enderio.mixin.EnderIoDrainMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DrainBlockEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

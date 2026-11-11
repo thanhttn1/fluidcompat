@@ -2,6 +2,26 @@
 
 Versioning: `2.X.0` for a big update (new mod support), `2.X.Y` for a small update or fix.
 
+## 2.3.0
+
+* **New: Ender IO support**.
+  * **Drain:** it only ever took source blocks, so it never made water, but it ignored the thin layers Flowing Fluids
+    leaves behind and it stopped as soon as the block under it was such a layer. It now takes those layers too, as
+    exactly the water they hold (125 mB per level), paid by the world, and keeps running on them. Source blocks are
+    still handled by Ender IO itself.
+  * **Niard (fluid placer):** over a thin layer of its own fluid it turned the layer into a full source block and
+    charged a whole bucket, so the part the layer already held was lost. It now pays only what the world gains.
+  * **Conduit bundle:** now counts as a submerged pipe for Flowing Fluids (it is added next to your pipe list, the list
+    in the config is untouched), like the Modern Industrialization or Mekanism pipes.
+  * Industrial Insulation (a sponge) needs nothing: it only removes water. No other Ender IO machine takes fluid from
+    or puts fluid into the world.
+  * Switches in the new `enderio` section: `enabled`, `conduitBundlesAsPipes` (restart), `drainThinFluids`,
+    `niardRefundReplacedLevels`; also in the "Mod Compat List" tab. Each hook checks Ender IO's code when it loads and
+    switches itself off with a log line if that code looks different.
+  * Known limit: a thin layer costs the Drain a full bucket's worth of energy (Ender IO's own price per step).
+* The log says "hook allowed" when the code check passes and "for the first time" when a hook is really used by the
+  game (same as the Seawater Pump since 2.2.4).
+
 ## 2.2.4
 
 * **Fixed: the Mekanism Elements Seawater Pump stopped working after a cycle or two, even in an ocean.** The pump only

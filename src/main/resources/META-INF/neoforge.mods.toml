@@ -26,6 +26,12 @@ config="${mod_id}.compat.mekanismelements.mixins.json"
 config="${mod_id}.compat.mekanismelements.thinwater.mixins.json"
 
 [[mixins]]
+config="${mod_id}.compat.enderio.drain.mixins.json"
+
+[[mixins]]
+config="${mod_id}.compat.enderio.niard.mixins.json"
+
+[[mixins]]
 config="${mod_id}.compat.mekanismdieselgenerators.mixins.json"
 
 [[mixins]]

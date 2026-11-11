@@ -82,6 +82,7 @@ public final class YaclConfigScreenFactory {
                 .group(buildMekanismGroup())
                 .group(buildMekanismElementsGroup())
                 .group(buildMekanismDieselGeneratorsGroup())
+                .group(buildEnderIoGroup())
                 .group(buildAlexsCavesGroup())
                 .group(buildImmersiveEngineeringGroup())
                 .group(buildPneumaticCraftGroup())
@@ -163,6 +164,18 @@ public final class YaclConfigScreenFactory {
                 .option(slider("seawaterMinTicks", FluidCompatModulesConfig.SEAWATER_MIN_TICKS_BETWEEN_INTAKES, 0, 6000, 20, installed))
                 .option(choice("seawaterShortfall", FluidCompatModulesConfig.SEAWATER_SHORTFALL, ShortfallBehavior.class, installed))
                 .option(toggle("seawaterDrainThinWater", FluidCompatModulesConfig.SEAWATER_DRAIN_THIN_WATER, installed))
+                .build();
+    }
+
+    private static OptionGroup buildEnderIoGroup() {
+        boolean installed = isLoaded("enderio");
+        return OptionGroup.createBuilder()
+                .name(Component.translatable("fluidcompat.group.enderio"))
+                .description(OptionDescription.of(Component.translatable("fluidcompat.group.enderio.desc")))
+                .option(toggle("enderioEnabled", FluidCompatModulesConfig.ENDERIO_ENABLED, installed))
+                .option(toggle("enderioConduitsAsPipes", FluidCompatModulesConfig.ENDERIO_CONDUITS_AS_PIPES, installed))
+                .option(toggle("enderioDrainThin", FluidCompatModulesConfig.ENDERIO_DRAIN_THIN_WATER, installed))
+                .option(toggle("enderioNiardRefund", FluidCompatModulesConfig.ENDERIO_NIARD_REFUND, installed))
                 .build();
     }
 

@@ -54,6 +54,7 @@ public final class CompatBootstrap {
         CompatModuleRegistry.register(new InfoCompatModule("immersivepetroleum", "immersivepetroleum", "Immersive Petroleum (no hook needed)"));
         CompatModuleRegistry.register(new MekanismDieselGeneratorsCompatModule());
         CompatModuleRegistry.register(new CreateCompatModule());
+        CompatModuleRegistry.register(new me.thanhtnt2.fluidcompat.compat.enderio.EnderIoCompatModule());
         CompatModuleRegistry.register(new FluidloggedCompatModule());
         CompatModuleRegistry.register(new FlowingFluidsPipesCompatModule());
         CompatModuleRegistry.register(new me.thanhtnt2.fluidcompat.compat.flowingfluids.patches.FlowingFluidsPatchesCompatModule());

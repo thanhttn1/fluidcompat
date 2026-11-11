@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import me.thanhtnt2.fluidcompat.api.FluidCompatModulesTags;
 import me.thanhtnt2.fluidcompat.config.FluidCompatModulesConfig;
@@ -20,12 +21,22 @@ import net.minecraft.world.level.block.Block;
  */
 public final class PipeBlockMatcher {
 
+    // Class names that compat modules add themselves, next to the user's list: the user's config list is never touched,
+    // so an existing config file does not need to learn about a new mod
+    private static final Set<String> MODULE_CLASS_NAMES = ConcurrentHashMap.newKeySet();
+
     private PipeBlockMatcher() {
+    }
+
+    /** For compat modules: also treat blocks of this class (or a subclass) as pipes. Call before the pipes module starts. */
+    public static void addModuleClassName(String className) {
+        MODULE_CLASS_NAMES.add(className);
     }
 
     /** Must run after all registries are filled, which is true from common setup onwards. */
     public static List<Block> collectBlocks() {
         Set<String> classNames = new HashSet<>(FluidCompatModulesConfig.FLUIDLOGGED_BLOCK_CLASSES.get());
+        classNames.addAll(MODULE_CLASS_NAMES);
         Set<Block> matched = new LinkedHashSet<>();
         for (Block block : BuiltInRegistries.BLOCK) {
             if (isInstanceOfAnyNamedClass(block.getClass(), classNames) && !ExternalHandledBlocks.isHandledElsewhere(block)) {

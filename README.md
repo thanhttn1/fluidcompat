@@ -28,6 +28,7 @@ Fluid removal goes through the Flowing Fluids API.
 | **Mekanism Diesel Generators** (with Create) | Shaft Pump and Inline Pump drain the world instead of making water |
 | **PneumaticCraft: Repressurized** | Liquid Hopper (also thin leftover water) and Gas Lift stop duplicating water |
 | **Immersive Engineering** | Fluid Pump takes real source blocks, empties ponds fully, leaves no cobblestone |
+| **Ender IO** | Drain also empties thin water layers and keeps running on them; Niard no longer loses water over a thin layer; conduit bundle counts as a submerged pipe |
 | **Alex's Caves** | Drain moves finite fluid level by level (Copper Valve needs nothing) |
 | **Create** | Handled by Flowing Fluids itself; Fluid Compat only checks the combination |
 | **Immersive Petroleum** | Nothing needed: its pumpjacks draw from underground reservoirs |

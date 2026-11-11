@@ -47,6 +47,13 @@ What Fluid Compat does with it, stated plainly:
   Fluid Compat contains no code or assets of it. It references the Create-powered Shaft Pump and Inline Pump class by name
   at runtime and only makes the world pay for the water those pumps put into their tank.
 
+## Ender IO
+
+* Ender IO by CrazyPants, tterrag, HenryLoenwind, MatthiasM, CyanideX, EpicSquid, Rover656, HypherionSA, liliandev,
+  Ferri_Arnus, dphaldes and contributors (CC0, public domain dedication). Fluid Compat contains no Ender IO code or
+  assets. It references the Drain and Niard classes by name at runtime and only changes how they treat thin fluid
+  layers of finite fluids; the conduit bundle is only added to the list of pipe blocks.
+
 ## Reporting bugs
 
 **Report every Fluid Compat bug to me (thanhttn1), not to the author of Flowing Fluids or of any other mod.**
@@ -65,6 +72,7 @@ Licenses below are as declared in the mods' own metadata (versions we tested aga
 | Mekanism 10.7.x | Aidancbrady and contributors | MIT |
 | Mekanism Elements 3.0.x | FixedDolphin927, NadienDev | MIT |
 | Mekanism Diesel Generators 1.5.x | Noe | Apache-2.0 |
+| Ender IO 8.2.x | CrazyPants, tterrag and contributors | CC0 |
 | Fluidlogged 2.0.x | Leximon | MIT |
 | Jade 15.x | Snownee | CC-BY-NC-SA-4.0 |
 | Just Enough Items 19.x | mezz | MIT |
